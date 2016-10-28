@@ -1,0 +1,30 @@
+.menuElement {
+	margin-left: 10px;
+	display: block;
+}
+.menuElement a {
+	text-decoration: none;
+}
+.menuElement a:hover {
+	font-weight: bold;
+}
+.menuHeaderClosed {
+	background: url(images/bookClosed.gif) no-repeat;
+	padding: 2px 0 2px 20px;
+	background-position: 0 0;
+	line-height: 18px;
+}
+.menuHeaderOpened {
+	background: url(images/bookOpened.gif) no-repeat;
+	padding: 2px 0 2px 20px;
+	background-position: 0 0;
+	line-height: 18px;
+}
+.itemHeader {
+	background: url(images/page.gif) no-repeat;
+	padding: 2px 0 2px 20px;
+	background-position: 0 0;
+	line-height: 18px;
+}
+.menuBody {
+}

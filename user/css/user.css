@@ -1,0 +1,54 @@
+.orange-color {
+    color: #f65314;
+}
+
+.title-post{
+    color: #f65314;
+    text-decoration: none;
+}
+
+.text-muted {
+    color: #90a4ae;
+}
+
+a.title-post:hover,
+a.title-post:focus {
+  color: #f65314;
+  text-decoration: underline;
+}
+
+.title-left{
+    float: left;
+}
+
+.table-full-width {
+  width: 100% !important;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.waiting{
+    background-color: #90a4ae;
+}
+
+.finished{
+    background-color: #8bc34a;
+}
+
+.matching{
+    background-color: #8bc34a;
+}
+
+.matched{
+    background-color: #8bc34a;
+}
+
+.confirmed{
+    background-color: #337ab7;
+}
+
+.transfered{
+    background-color: #337ab7;
+}
