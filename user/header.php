@@ -44,7 +44,7 @@
     require('../../config.php');
     require('../models/user.php');
     session_start();
-    $_SESSION['login_id'] = "2";
+    $_SESSION['login_id'] = "13";
     $id = $_SESSION['login_id'];
     $userDetail = thongtinchitiet($id);
 ?>

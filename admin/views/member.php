@@ -75,8 +75,16 @@
                                                     <td><?php echo $listUser['nguoidung_sdt'];?></td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>
                                                     <input style="display:none" class="form-control" name="id" id="giatri<?php echo $listUser['nguoidung_id'] ?>" type="text" readonly value="<?php echo $listUser['nguoidung_trangthaihoatdong'];?>">
-                                                    <td id="<?php echo $listUser['nguoidung_id']?>" class="ngung"><button type="button" id="ngung<?php echo $listUser['nguoidung_id'] ?>" class="ngung<?php echo $listUser['nguoidung_id'] ?>"><?php echo $listUser['nguoidung_trangthaihoatdong'];?></button></td>
-                                                    <td id="<?php echo $listUser['nguoidung_id']?>" class="khoa"><button type="button" id="khoa<?php echo $listUser['nguoidung_id'] ?>" class="khoa<?php echo $listUser['nguoidung_id'] ?>"><?php echo $listUser['nguoidung_trangthaihoatdong'];?></button></td>
+                                                    <td id="<?php echo $listUser['nguoidung_id']?>" class="ngung">
+                                                        <button <?php if($listUser['nguoidung_trangthaihoatdong'] == 'clock') echo 'disabled'; ?> type="button" id="ngung<?php echo $listUser['nguoidung_id'] ?>" class="btn btn-sm btn-warning" class="ngung<?php echo $listUser['nguoidung_id'] ?>">
+                                                            <?php if( $listUser['nguoidung_trangthaihoatdong']== 'normal') {echo 'Normal';} else if ($listUser['nguoidung_trangthaihoatdong']== 'freeze') { echo 'UnFeezed';} else {echo '---';}?>
+                                                        </button>
+                                                    </td>
+                                                    <td id="<?php echo $listUser['nguoidung_id']?>" class="khoa">
+                                                        <button <?php if($listUser['nguoidung_trangthaihoatdong'] == 'freeze') echo 'disabled'; ?> type="button" id="khoa<?php echo $listUser['nguoidung_id'] ?>" class="btn btn-sm btn-danger" class="khoa<?php echo $listUser['nguoidung_id'] ?>">
+                                                            <?php if( $listUser['nguoidung_trangthaihoatdong']== 'normal') {echo 'Normal';} else if ($listUser['nguoidung_trangthaihoatdong']== 'freeze') { echo '---';} else {echo 'UnClock';}?>
+                                                        </button>
+                                                    </td>
                                                     <?php $iSTT++;?>
                                                 </tr>
                                                 <?php }?>
@@ -126,14 +134,12 @@
                     success:function(data)  
                     {
                         if(data == 1){
-                            $this.toggleClass(ngung);
-                            if($this.hasClass(ngung)){
-                                $this.text('Normal');
-                                document.getElementById(ngung).value="freezed";
-                            }
-                            else{
-                                $this.text('Freezed');
-                            }
+                            $this.text("UnFreezed");
+                            $('#khoa'+id).text("---");
+                            document.getElementById(giatristatus).value="freeze";
+                        }
+                        else{
+                            $this.text('Normal');
                         }
                     }
                 });
@@ -149,15 +155,62 @@
                     dataType:"text",  
                     success:function(data)  
                     {
-                        if(data == 2){
-                            $this.toggleClass(ngung);
-                            if($this.hasClass(ngung)){
-                                $this.text('Freezed');
-                                document.getElementById(ngung).value="nonmal";
-                            }
-                            else{
-                                $this.text('Normal');
-                            }
+                        if(data == 1){
+                            $this.text("Normal");
+                            document.getElementById(giatristatus).value="normal";
+                        }
+                        else{
+                            $this.text('UnFreezed');
+                        }
+                    }
+                });
+            }
+        });
+        $('.khoa').click(function(){
+            var id = $(this).attr("id");
+            var ngung = 'khoa' + id;
+            var giatristatus = 'giatri' + id;
+            var $this = $(this).children('button');
+            var giatri = document.getElementById(giatristatus).value;
+            if(giatri == 'normal'){
+                $.ajax({
+                    url:"../models/update_status_user.php", 
+                    method:"post",  
+                    data:{
+                        action: 'clock',
+                        id: id
+                    },
+                    dataType:"text",  
+                    success:function(data)  
+                    {
+                        if(data == 1){
+                            $this.text("UnClock");
+                            $('#ngung'+id).text("---");
+                            document.getElementById(giatristatus).value="clock";
+                        }
+                        else{
+                            $this.text('Normal');
+                        }
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    url:"../models/update_status_user.php", 
+                    method:"post",  
+                    data:{
+                        action: 'normal',
+                        id: id
+                    },
+                    dataType:"text",  
+                    success:function(data)  
+                    {
+                        if(data == 1){
+                            $this.text("Normal");
+                            document.getElementById(giatristatus).value="normal";
+                        }
+                        else{
+                            $this.text('UnClock');
                         }
                     }
                 });

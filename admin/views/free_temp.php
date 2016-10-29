@@ -6,7 +6,7 @@
     require("../models/member_f1.php");
     $array_id = mysql_fetch_array(getid($user_check));
     $id = $array_id[0];
-    $user = danhsach();
+    $user = danhsach($id);
     $rowUser = 1;
     if(!$user || mysql_num_rows($user) == 0){
         $rowUser = 0;
@@ -53,23 +53,24 @@
                                                 $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
                                                 $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
                                             }
-                                        $newString = pathparent($new_array, $id, $newString);
+                                        $newString = recursive($new_array, $id, $newString);
                                         $newString = str_replace('<ul></ul>', '', $newString);
                                         $newString = trim($newString);
-                                        $ds = explode(',',$newString);
-                                        echo "<ul>";
-                                        for($i=0; $i < count($ds)-1;$i++){
-                                            $dem = $ds[$i];
-                                            $k = getparent($dem);
-                                            $tem = mysql_num_rows($k);
-                                            if($tem < 2){
-                                                echo "<li>" . $dem ."</li>";
-                                            }
-                                            else{
-                                                echo '';
-                                            }
-                                        }
-                                        echo "</ul>";
+                                        echo $newString;
+                                        // $ds = explode(',',$newString);
+                                        // echo "<ul>";
+                                        // for($i=0; $i < count($ds)-1;$i++){
+                                        //     $dem = $ds[$i];
+                                        //     $k = getparent($dem);
+                                        //     $tem = mysql_num_rows($k);
+                                        //     if($tem < 2){
+                                        //         echo "<li>" . $dem ."</li>";
+                                        //     }
+                                        //     else{
+                                        //         echo '';
+                                        //     }
+                                        // }
+                                        // echo "</ul>";
                                     ?>
                                 </div>
                             </div>

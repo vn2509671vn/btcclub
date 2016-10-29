@@ -1,7 +1,80 @@
 <?php 
     require("../../config.php");
+    function getTotalValue($parentID=null, $gTotal=0){
+        // Create the query
+        $query = "SELECT * FROM nguoidung WHERE ";
+        if($parentID == null) {
+            $query .= "nguoidung_parent_id IS NULL";
+        }
+        else {
+            $query .= "nguoidung_parent_id=" . intval($parentID);
+        }
+        // Execute the query and go through the results.
+        $result = mysql_query($query);
+        if($result)
+        {
+            while($row = mysql_fetch_array($result))
+            {
+                //The current ID;
+                $currentID = $row['nguoidung_id'];
+                // Sum all children of the current ID
+                if($row['nguoidung_sopindadung'] >= 1){
+                    $gTotal += 100;
+                }
+                $gTotal = getTotalValue($currentID, $gTotal);
+            }
+        }
+        return $gTotal;
+    }
+    
+    function getParent($userID, $arrParent){
+        $arrTmp = array();
+        $arrTmp = $arrParent;
+        // Create the query
+        $query = "SELECT * FROM nguoidung WHERE nguoidung_id = $userID";
+        // Execute the query and go through the results.
+        $result = mysql_query($query);
+        if($result)
+        {
+            while($row = mysql_fetch_array($result))
+            {
+                // The current ID;
+                $currentID = $row['nguoidung_parent_id'];
+                // Count all parent of the current ID
+                if($currentID != NULL){
+                    array_push($arrTmp, $currentID);
+                }
+                $arrTmp = getParent($currentID, $arrTmp);
+            }
+        }
+        return $arrTmp;
+    }
+    
+    function getLeftNode($parentID){
+        $query = "select * from nguoidung where nguoidung_parent_id = $parentID and nguoidung_loainhanh = 'L'";
+        $result = mysql_query($query);
+        return mysql_fetch_array($result);
+    }
+    
+    function getRightNode($parentID){
+        $query = "select * from nguoidung where nguoidung_parent_id = $parentID and nguoidung_loainhanh = 'R'";
+        $result = mysql_query($query);
+        return mysql_fetch_array($result);
+    }
+    
     function kiemtrastatus($nguoidung_id){
         $query = "select * from nguoidung where nguoidung_id = $nguoidung_id";
+        return mysql_query($query);
+    }
+    
+    function getUserByID($userID){
+        $query = "select * from nguoidung where nguoidung_id = $nguoidung_id";
+        $result = mysql_query($query);
+        return mysql_fetch_array($result);
+    }
+    
+    function updateCommisson($userID, $giatricanbang, $hoahong){
+        $query = "update nguoidung set nguoidung_giatricanbang = $giatricanbang, nguoidung_sotienhoahong = $hoahong where nguoidung_id = $userID";
         return mysql_query($query);
     }
     
@@ -22,8 +95,28 @@
         return mysql_query($query);
     }
     
+    function finishPD($pdid){
+        $query = "update pd set pd_status = 'finished' where pd_id = $pdid";
+        return mysql_query($query);
+    }
+    
+    function existPDTransfer($pdid){
+        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_gd_status not in ('confirmed')";
+        return mysql_query($query);
+    }
+    
     function kiemtragd($nguoidung_id){
         $query = "select * from gd, nguoidung where gd.gd_nguoidung_id = nguoidung.nguoidung_id and gd.gd_nguoidung_id = $nguoidung_id and gd.gd_status NOT IN ('finished')";
+        return mysql_query($query);
+    }
+    
+    function finishGD($gdid){
+        $query = "update gd set gd_status = 'finished' where gd_id = $gdid";
+        return mysql_query($query);
+    }
+    
+    function existGDTransfer($gdid){
+        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_pd_status not in ('transfered')";
         return mysql_query($query);
     }
     
@@ -139,8 +232,8 @@
     }
     
     /*Group function for GD*/
-    function addCommission($nguoidung_id, $hoahong){
-        $query = "update nguoidung set nguoidung_sotienhoahong = $hoahong where nguoidung_id = $nguoidung_id";
+    function addRWallet($nguoidung_id, $tiennhan){
+        $query = "update nguoidung set nguoidung_sotiennhan = $tiennhan where nguoidung_id = $nguoidung_id";
         return mysql_query($query);
     }
     
@@ -188,7 +281,7 @@
             $okGD = false;
             $okFinish = false;
             $userPD = getUserByPD($pdid);
-            $userGD = getUserByPD($gdid);
+            $userGD = getUserByGD($gdid);
             $transfer = doGDAction($gdid, $pdid, $action);
             
             /*Execute for GD to PD*/
@@ -220,19 +313,60 @@
                 }
             }
             else {
-                $commission = $userPD['nguoidung_sotienhoahong'] + 150;
-                $addCommission = addCommission($userPD['nguoidung_id'], $commission);
-                if($addCommission){
+                $rWallet = $userPD['nguoidung_sotiennhan'] + 150;
+                $addWallet = addRWallet($userPD['nguoidung_id'], $rWallet);
+                if($addWallet){
                     $okPD = true;
                 }
             }
             
             /*Finish for pd-gd*/
             if($okPD && $okPD){
-                $okFinish = finishTransfer($transferid);
+                $transferFinish = finishTransfer($transferid);
+                $existPDTransfer = existPDTransfer($gdid);
+                $existGDTransfer = existGDTransfer($gdid);
+                if(mysql_num_rows($existPDTransfer) == 0){
+                    $pdFinish = finishPD($pdid);
+                }
+                
+                if(mysql_num_rows($existGDTransfer) == 0){
+                    $gdFinish = finishGD($gdid);
+                }
             }
             
-            if($okFinish && $transfer){
+            /*Add Commission*/
+            if($userPD['nguoidung_sopindadung'] == 1){
+                $arrParent = array();
+                $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
+                foreach ($arrParent as $parentId) {
+                    $root = getUserByID($parentId);
+                    $nodeL = getLeftNode($parentId);
+                    $nodeR = getRightNode($parentId);
+                    $totalL = 0;
+                    $totalR = 0;
+                    $tiencanbang = 0;
+                    $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
+                    $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
+                    if($nodeL['nguoidung_sopindadung'] >= 1){
+                        $totalL += 100;
+                    }
+                    
+                    if($nodeR['nguoidung_sopindadung'] >= 1){
+                        $totalR += 100;
+                    }
+                    
+                    $tiencanbang = min($totalL,$totalR);
+                    $giatricanbang = $root['nguoidung_giatricanbang'];
+                    if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
+                        $giatricanbang = $tiencanbang;
+                        $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*10/100;
+                        $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
+                    }
+                }
+            }
+            
+            
+            if($transferFinish && $transfer){
                 echo true;
             }
             else {

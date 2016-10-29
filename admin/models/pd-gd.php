@@ -39,7 +39,7 @@
             $gdid = $_POST['gdid'];
             $sotien = $_POST['sotien'];
             $pd_chuacho = $_POST['pd_chuacho'];
-            $matransfer = $_POST['matransfer'];
+            $matransfer = '';
             $statusPD = updatePDStatus($pdid, 'matched', $pd_chuacho);
             $statusGD = updateGDStatus($gdid, 'matched');
             $isKhopLenh = khoplenh($matransfer, $pdid, $gdid, $sotien);

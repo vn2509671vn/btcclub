@@ -110,7 +110,7 @@
     
     window.onload = function()
     {
-        if(status == 'clock'){
+        if(status == 'freeze'){
             $("#xulystatus").fadeOut('slow', function()
 			 {
 				$("#xulystatus").fadeIn('slow');

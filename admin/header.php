@@ -121,10 +121,10 @@
                         <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Bảng điều khiển</a>
                     </li>
                     <li id="matching-auto">
-                        <a href="matching-auto.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh PD - GD AUTO</a>
+                        <a href="matching-auto.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh AUTO</a>
                     </li>
                     <li id="matching-num">
-                        <a href="matching-num.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh PD - GD NUMBER</a>
+                        <a href="matching-num.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh Thủ Công</a>
                     </li>
                     <li id="pin">
                         <a href="transfer_pin.php"><i class="fa fa-fw fa-bolt"></i> Quản lý PIN</a>

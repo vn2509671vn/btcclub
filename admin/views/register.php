@@ -6,6 +6,7 @@
     require("../models/member_f1.php");
     $array_id = mysql_fetch_array(getid($user_check));
     $id = $array_id[0];
+    $user = danhsach();
     $lstidnhanh = getnhanh($id);
     $taikhoan="";
     $count_id = mysql_fetch_array(count_id());
@@ -78,9 +79,32 @@
                                                 <div class="form-group">
                                                     <label>ID Quản lí:</label>
                                                     <select name="nguoidung_parent_id"  class="form-control">
-                                                        <?php while ($row = mysql_fetch_array($lstidnhanh,MYSQL_NUM)) {?>
-                                                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                                                        <?php } ?>
+                                                        <?php
+                                                            $new_array = array();
+                                                            while ($row = mysql_fetch_array($user)) 
+                                                                {
+                                                                    $new_array[$row['nguoidung_id']]['nguoidung_id'] = $row['nguoidung_id'];
+                                                                    $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
+                                                                    $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
+                                                                }
+                                                            $newString = pathparent($new_array, $id, $newString);
+                                                            $newString = str_replace('<ul></ul>', '', $newString);
+                                                            $newString = trim($newString);
+                                                            $ds = explode(',',$newString);
+                                                            for($i=0; $i < count($ds)-1;$i++){
+                                                                $dem = $ds[$i];
+                                                                $k = getparent(intval($dem));
+                                                                $tem = mysql_num_rows($k);
+                                                                if($tem < 2){
+                                                                    $ds_nhanh = sttaccount(intval($dem)); ?>
+                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. $tem. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
+                                                                <?php }
+                                                                    else{
+                                                                        echo '';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                       
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -95,13 +119,6 @@
                                                     <label>Mật khẩu giao dịch:</label>
                                                     <input  name="nguoidung_matkhaugd" class="form-control" type="password" required placeholder ="Mật khẩu phải lớn hơn 6 kí tự.">
                                                 </div>
-                                                <!--<div class="form-group">-->
-                                                <!--    <label>Quyền:</label>-->
-                                                <!--    <div>-->
-                                                <!--        <input required type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> <label>Admin</label>-->
-                                                <!--        <input required type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> <label>Bình Thường</label>-->
-                                                <!--    </div>-->
-                                                <!--</div>-->
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
@@ -155,7 +172,7 @@
     var status =$('#status').val();
     window.onload = function()
     {
-        if(status == 'clock'){
+        if(status == 'freeze'){
             $("#xulystatus").fadeOut('slow', function()
 			 {
 				$("#xulystatus").fadeIn('slow');

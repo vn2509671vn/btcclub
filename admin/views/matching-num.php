@@ -247,6 +247,10 @@ require("../models/pd-gd.php");
                  if(tiennhan == 0) break;
              }
          }
+         
+         setTimeout(function(){ 
+             window.location.reload();
+         }, 2000);
       });
     });
 </script>
