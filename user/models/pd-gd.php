@@ -68,7 +68,7 @@
     }
     
     function getUserByID($userID){
-        $query = "select * from nguoidung where nguoidung_id = $nguoidung_id";
+        $query = "select * from nguoidung where nguoidung_id = $userID";
         $result = mysql_query($query);
         return mysql_fetch_array($result);
     }
@@ -358,13 +358,12 @@
                     $tiencanbang = min($totalL,$totalR);
                     $giatricanbang = $root['nguoidung_giatricanbang'];
                     if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
-                        $giatricanbang = $tiencanbang;
                         $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*10/100;
+                        $giatricanbang = $tiencanbang;
                         $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
                     }
                 }
             }
-            
             
             if($transferFinish && $transfer){
                 echo true;

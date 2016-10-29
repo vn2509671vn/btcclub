@@ -10,6 +10,7 @@
     var_dump($gTotal);
     
     $arrTest = array(1,7);
+    $szTmp;
     foreach ($arrTest as $parentId) {
         $nodeL = getLeftNode($parentId);
         $nodeR = getRightNode($parentId);
@@ -17,10 +18,21 @@
         $totalR = 0;
         $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
         $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
-        var_dump($nodeL['nguoidung_id']);
-        var_dump($nodeR['nguoidung_id']);
-        var_dump($totalL);
-        var_dump($totalR);
+        if($nodeL['nguoidung_sopindadung'] >= 1){
+                        $totalL += 100;
+                    }
+                    
+                    if($nodeR['nguoidung_sopindadung'] >= 1){
+                        $totalR += 100;
+                    }
+                    
+                    $tiencanbang = min($totalL,$totalR);
+                    $giatricanbang = $root['nguoidung_giatricanbang'];
+                    if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
+                        $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*10/100;
+                        $giatricanbang = $tiencanbang;
+        }
+        var_dump($szTmp .= "ID:".$parentId."- Tien can bang:".$giatricanbang. "-Hoa hong".$hoahong);
     }
 ?>
         <div id="page-wrapper">
