@@ -61,7 +61,7 @@ require("../models/pd-gd.php");
                                                                 <td><?php echo $listPD['nguoidung_taikhoan'];?></td>
                                                                 <td><?php echo $listPD['pd_ngaytao'];?></td>
                                                                 <td><?php echo $listPD['pd_mapd'];?></td>
-                                                                <td class="pd_filled" data-id="<?php echo $listPD['pd_id'];?>"><?php echo $listPD['pd_filled'];?></td>
+                                                                <td class="pd_filled" data-id="<?php echo $listPD['pd_id'];?>"><?php echo $listPD['pd_notfilled'];?></td>
                                                                 <td>---</td>
                                                             <?php $pdSTT++;?>
                                                             </tr>

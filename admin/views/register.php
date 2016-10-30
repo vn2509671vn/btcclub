@@ -97,7 +97,7 @@
                                                                 $tem = mysql_num_rows($k);
                                                                 if($tem < 2){
                                                                     $ds_nhanh = sttaccount(intval($dem)); ?>
-                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. $tem. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
+                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
                                                                 <?php }
                                                                     else{
                                                                         echo '';

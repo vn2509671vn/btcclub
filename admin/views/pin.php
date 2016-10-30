@@ -1,7 +1,7 @@
 <!-- Add start Header-->
 <?php require("../header.php");
-    require("../../user/models/pd.php");
-    require("../../user/models/pd-gd.php");
+    require("../models/pd_new.php");
+    require("../models/pd-gd_new.php");
 ?>
 <!-- Add end Header-->
 <!-- Add start Models-->

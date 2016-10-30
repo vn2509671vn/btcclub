@@ -29,7 +29,7 @@
           <?php }?>
           <button type="submit" id="submit" name="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
           <div>
-            <a href="#">reset password</a>
+            <a href="#">Reset password</a>
           </div>
           
         </form>

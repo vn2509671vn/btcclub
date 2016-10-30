@@ -50,21 +50,16 @@
     }
     function pathparent($source, $parent, &$newString){
     	if(count($source) > 0) {
-    	   // $newString .= '<ul>';
     		foreach ($source as $key => $value){
-    		  //  var_dump($source[$key]['nguoidung_id']);
     		    if( mysql_num_rows(getparent($source[$key]['nguoidung_id'])) != 3){
         			if($value['nguoidung_parent_id'] == $parent){
-        				// $value['nguoidung_taikhoan'] = $value['nguoidung_taikhoan'];
         				$newString .= $value['nguoidung_id'] . ',';
         				unset($source[$key]);
         				$newParent = $value['nguoidung_id'];
         				pathparent($source, $newParent, $newString);
-        				// $newString .= '</li>';
         			}
     		    }
     		}
-    // 		$newString .= '</ul>';
     	}
     	return $newString;
     }   
@@ -74,7 +69,6 @@
     		foreach ($source as $key => $value){
     		    if( mysql_num_rows(getparent($source[$key]['nguoidung_id'])) != 3){
         			if($value['nguoidung_parent_id'] == $parent){
-        				// $value['nguoidung_taikhoan'] = $value['nguoidung_taikhoan'];
         				$newString .= '<li>';
         				$newString .= $value['nguoidung_id'];
         				unset($source[$key]);

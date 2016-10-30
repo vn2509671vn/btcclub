@@ -78,6 +78,11 @@
         return mysql_query($query);
     }
     
+    function updateRecommanderCommisson($userID, $hoahong){
+        $query = "update nguoidung set nguoidung_sotienhoahong = $hoahong where nguoidung_id = $userID";
+        return mysql_query($query);
+    }
+    
     function getUserByPD($pdid){
         $query = "select nguoidung.*, pd.* from nguoidung, pd where nguoidung.nguoidung_id = pd.pd_nguoidung_id and pd.pd_id = $pdid";
         $result = mysql_query($query);
@@ -336,10 +341,22 @@
             
             /*Add Commission*/
             if($userPD['nguoidung_sopindadung'] == 1){
+                /*Add commission for recommender*/
+                $recommenderID = $userPD['nguoidung_gioithieu'];
+                $recommender = getUserByID($recommenderID);
+                if($recommender['nguoidung_sopindadung'] > 1){
+                    $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
+                    $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
+                }
+                
+                /*Add commission for weak team*/
                 $arrParent = array();
                 $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
                 foreach ($arrParent as $parentId) {
                     $root = getUserByID($parentId);
+                    if($root['nguoidung_sopindadung'] <= 1){
+                        continue;
+                    }
                     $nodeL = getLeftNode($parentId);
                     $nodeR = getRightNode($parentId);
                     $totalL = 0;
@@ -358,7 +375,7 @@
                     $tiencanbang = min($totalL,$totalR);
                     $giatricanbang = $root['nguoidung_giatricanbang'];
                     if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
-                        $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*10/100;
+                        $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*$root['nguoidung_phantramhoahong'];
                         $giatricanbang = $tiencanbang;
                         $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
                     }
