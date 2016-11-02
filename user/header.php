@@ -51,7 +51,7 @@
         header("location: ../../index.php");
     }
     $id = $_SESSION['login_id'];
-    $userDetail = thongtinchitiet($id);
+    $userDetail = userDetail($id);
 ?>
 <body>
 

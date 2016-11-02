@@ -106,7 +106,12 @@
     }
     
     function existPDTransfer($pdid){
-        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_gd_status not in ('confirmed')";
+        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_pd_status = 'waiting'";
+        return mysql_query($query);
+    }
+    
+    function existPD($pdid){
+        $query = "select * from pd where pd_id = $pdid and pd_notfilled NOT IN (0)";
         return mysql_query($query);
     }
     
@@ -121,7 +126,7 @@
     }
     
     function existGDTransfer($gdid){
-        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_pd_status not in ('transfered')";
+        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_gd_status = 'waiting'";
         return mysql_query($query);
     }
     
@@ -260,6 +265,12 @@
         return mysql_query($query);
     }
     
+    function getDetailGD($gdid){
+        $query = "select * from gd where gd_id = $gdid";
+        $result =  mysql_query($query);
+        return mysql_fetch_array($result);
+    }
+    
     /*Function for finish pd-gd*/
     function finishTransfer($transfer_id){
         $query = "update transfer_pd_gd set transfer_status = 'finished' where transfer_id = $transfer_id";
@@ -305,10 +316,11 @@
             $okFinish = false;
             $userPD = getUserByPD($pdid);
             $userGD = getUserByGD($gdid);
+            $gdDetail = getDetailGD($gdid);
             $transfer = doGDAction($gdid, $pdid, $action);
             
             /*Execute for GD to PD*/
-            if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1){
+            if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1 && $gdDetail['gd_mathuong'] != 1){
                 $mapd = 'PD'.$userGD['nguoidung_id'].date("YmdHs");
                 $pin = $userGD['nguoidung_sopin'] - 1;
                 $pinused = $userGD['nguoidung_sopindadung'] + 1;
@@ -351,11 +363,12 @@
             }
             
             /*Finish for pd-gd*/
-            if($okPD && $okPD){
+            if($okGD && $okPD){
                 $transferFinish = finishTransfer($transferid);
                 $existPDTransfer = existPDTransfer($pdid);
+                $existPD = existPD($pdid);
                 $existGDTransfer = existGDTransfer($gdid);
-                if(mysql_num_rows($existPDTransfer) == 0){
+                if(mysql_num_rows($existPDTransfer) == 0 && mysql_num_rows($existPD) == 0){
                     $pdFinish = finishPD($pdid);
                 }
                 

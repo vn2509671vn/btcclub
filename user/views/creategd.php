@@ -10,7 +10,7 @@ require("../models/pd-gd.php");
         $id = "0";
     }
     $isGD = isEnableGet($id);
-    $user = thongtinchitiet($id);
+    $user = userDetail($id);
     $minRwallet = 50;
     $userRWallet = $user['nguoidung_sotiennhan'];
 ?>

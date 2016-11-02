@@ -73,11 +73,14 @@
                                                 <div class="form-group">
                                                     <label>Người giới thiệu:</label>
                                                     <select name="nguoidung_gioithieu"  class="form-control">
-                                                        <option value="<?php echo $id; ?>"><?php echo $status[2]; ?></option>
+                                                        <option value="<?php echo $id; ?>"><?php echo $status['nguoidung_taikhoan']; ?></option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>ID Quản lí:</label>
+                                                    <!--<input type="text" name="currency" class="form-control" id="autocomplete" placeholder="Nhập tài khoản cần gắn">-->
+                                                    <!--<div style="clear:both;"></div>-->
+                                                    <!--<div id="grid-load"></div>-->
                                                     <select name="nguoidung_parent_id"  class="form-control">
                                                         <?php
                                                             $new_array = array();
@@ -127,15 +130,19 @@
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Số điện thoại:</label>
-                                                    <input name="nguoidung_sdt" required class="form-control" type="text">
+                                                    <input type="number" name="nguoidung_sdt" required class="form-control" type="text">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email:</label>
                                                     <input name="nguoidung_mail" required class="form-control" type="text">
                                                 </div>
-                                                 <div class="form-group">
+                                                <div class="form-group">
                                                     <label>Địa chỉ:</label>
                                                     <input name="nguoidung_diachi" required class="form-control" type="text">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Số CMND:</label>
+                                                    <input name="nguoidung_cmnd" required class="form-control" type="number">
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Đường dẫn ví Bitcoin:</label>

@@ -7,7 +7,7 @@ session_start();
     $userid = $_GET['id']; // Get from url
     $amount = $_GET['amount'];
     $transferid = $_GET['transferid'];
-    $user = thongtinchitiet($userid);
+    $user = userDetail($userid);
 ?>
 <!-- Add end models -->
 <!-- Add end Header-->
