@@ -31,9 +31,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
     <script src="../js/function.js"></script>
+    <script src="../js/logout.js"></script> <!-- Them vao ngay 21/10/2016 Ut -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootbox.js"></script>
+    <script src="../js/crud.js"></script> <!-- Them vao ngay 21/10/2016 Ut -->
     
     <!-- Plugin for datatable-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
@@ -43,8 +46,10 @@
 <?php 
     require('../../config.php');
     require('../models/user.php');
-    session_start();
-    $_SESSION['login_id'] = "10";
+    require('../models/session.php');
+    if($_SESSION['user_role'] != "normal"){
+        header("location: ../../index.php");
+    }
     $id = $_SESSION['login_id'];
     $userDetail = thongtinchitiet($id);
 ?>
@@ -77,7 +82,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="#" id="btnthoat" type="submit" name="remove_levels_h"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -95,7 +100,7 @@
                         <a href="gd.php"><i class="fa fa-fw fa-cloud-download"></i> Quản lý lệnh GD</a>
                     </li>
                     <li id="pin">
-                        <a href="pin.php"><i class="fa fa-fw fa-bolt"></i> Quản lý PIN</a>
+                        <a href="transfer_pin.php"><i class="fa fa-fw fa-bolt"></i> Quản lý PIN</a>
                     </li>
                     <li id="register">
                         <a href="register.php"><i class="fa fa-fw fa-plus-square"></i> Đăng ký thành viên mới</a>
@@ -103,8 +108,8 @@
                     <li id="member_f1">
                         <a href="member_f1.php"><i class="fa fa-fw fa-users"></i> Quản lý F1</a>
                     </li>
-                    <li id="tree_member">
-                        <a href="tree_member.php"><i class="fa fa-fw fa-share-alt fa-rotate-90"></i> Quản lý thành viên</a>
+                    <li id="thanhvien">
+                        <a href="thanhvien.php"><i class="fa fa-fw fa-plus-square"></i> Quản lí PD nhanh dưới</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#thongtin"><i class="fa fa-fw fa-user"></i> Thông tin cá nhân <i class="fa fa-fw fa-caret-down"></i></a>
@@ -113,18 +118,15 @@
                                 <a href="info.php">Thông tin chi tiết</a>
                             </li>
                             <li>
-                                <a href="#">Thông tin giao dịch</a>
+                                <a href="commission.php">Lịch sử hoa hồng</a>
                             </li>
                             <li>
-                                <a href="#">Đổi mật khẩu đăng nhập</a>
-                            </li>
-                            <li>
-                                <a href="#">Đổi mật khẩu giao dịch</a>
+                                <a href="matkhau.php">Đổi mật khẩu</a>
                             </li>
                         </ul>
                     </li>
                     <li id="logout">
-                        <a href="#"><i class="fa fa-fw fa-sign-out"></i> Thoát</a>
+                        <a href="#" id="btnlogout" type="submit" name="remove_levels"><i class="fa fa-fw fa-sign-out"></i> Thoát</a>
                     </li>
                 </ul>
             </div>

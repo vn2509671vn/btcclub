@@ -236,9 +236,27 @@
         return mysql_query($query);
     }
     
+    function updateTimePD($nguoidung_id){
+        date_default_timezone_set('Asia/Bangkok');
+        $time = new DateTime();
+        $datetime = $time->modify('+2 day');
+        $datetime = $datetime->format('Y-m-d H:i:s');
+        $query = "update nguoidung set nguoidung_hankichpd1 = '$datetime' where nguoidung_id = $nguoidung_id";
+        return mysql_query($query);
+    }
+    
     /*Group function for GD*/
     function addRWallet($nguoidung_id, $tiennhan){
         $query = "update nguoidung set nguoidung_sotiennhan = $tiennhan where nguoidung_id = $nguoidung_id";
+        return mysql_query($query);
+    }
+    
+    /*Group function for Commission History*/
+    function addHistoryCommission($nguoidung_id, $money=0, $description=""){
+        date_default_timezone_set('Asia/Bangkok');
+        $datetime = new DateTime();
+        $curDate = $datetime->format('Y-m-d H:i:s');
+        $query = "INSERT INTO commission(commission_date, commission_nguoidung_id, commission_value, commission_descript) value('$curDate', $nguoidung_id, $money, '$description')";
         return mysql_query($query);
     }
     
@@ -290,7 +308,7 @@
             $transfer = doGDAction($gdid, $pdid, $action);
             
             /*Execute for GD to PD*/
-            if($userGD['nguoidung_sopin'] > 0){
+            if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1){
                 $mapd = 'PD'.$userGD['nguoidung_id'].date("YmdHs");
                 $pin = $userGD['nguoidung_sopin'] - 1;
                 $pinused = $userGD['nguoidung_sopindadung'] + 1;
@@ -300,6 +318,9 @@
                 if($isPD && $isMinusPin && $isCreateHisPin){
                     $okGD = true;
                 }
+            }
+            else {
+                $okGD = true;
             }
             
             /*Execute for PD to GD*/
@@ -316,6 +337,10 @@
                         $okPD = true;
                     }
                 }
+                else {
+                    updateTimePD($userPD['nguoidung_id']);
+                    $okPD = true;
+                }
             }
             else {
                 $rWallet = $userPD['nguoidung_sotiennhan'] + 150;
@@ -328,7 +353,7 @@
             /*Finish for pd-gd*/
             if($okPD && $okPD){
                 $transferFinish = finishTransfer($transferid);
-                $existPDTransfer = existPDTransfer($gdid);
+                $existPDTransfer = existPDTransfer($pdid);
                 $existGDTransfer = existGDTransfer($gdid);
                 if(mysql_num_rows($existPDTransfer) == 0){
                     $pdFinish = finishPD($pdid);
@@ -347,6 +372,9 @@
                 if($recommender['nguoidung_sopindadung'] > 1){
                     $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
                     $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
+                    if($updateRecommenderCommission){
+                        addHistoryCommission($recommenderID, $recommenderCommission, 'Hoa hồng trực tiếp');
+                    }
                 }
                 
                 /*Add commission for weak team*/
@@ -378,6 +406,9 @@
                         $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*$root['nguoidung_phantramhoahong'];
                         $giatricanbang = $tiencanbang;
                         $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
+                        if($updateCommission){
+                            addHistoryCommission($root['nguoidung_id'], $hoahong, 'Hoa hồng nhánh yếu');
+                        }
                     }
                 }
             }

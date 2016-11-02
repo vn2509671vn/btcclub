@@ -19,6 +19,11 @@
     <link href="../css/user.css" rel="stylesheet">
     <link href="../css/login.css" rel="stylesheet"><!-- Them vao ngay 21/10/2016 Ut -->
     <!-- <link rel="stylesheet" type="text/css" href="../css/folder_style.css"><!-- Them vao ngay 21/10/2016 Ut -->
+    
+      <!-- Plugin for autocomplete -->
+  <script src="../js/currency-autocomplete.js"></script>
+  <script src="../js/jquery.autocomplete.js"></script>
+    
     <!-- Custom Fonts -->
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 

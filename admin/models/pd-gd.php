@@ -1,5 +1,10 @@
 <?php 
     require("../../config.php");
+    function kiemtrastatus($nguoidung_id){
+        $query = "select * from nguoidung where nguoidung_id = $nguoidung_id";
+        return mysql_query($query);
+    }
+    
     function danhsachpd(){
         $query = "select pd.*, nguoidung.* from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and pd.pd_notfilled != 0 ORDER BY pd.pd_ngaytao ASC";
         return mysql_query($query);
@@ -15,7 +20,6 @@
         $datetime = new DateTime();
         $curDate = $datetime->format('Y-m-d H:i:s');
         $timeRemain = $datetime->modify('+2 day');
-        $timeRemain = $timeRemain->modify('+12 hours');
         $timeRemain = $timeRemain->format('Y-m-d H:i:s');
         $query = "insert into transfer_pd_gd(transfer_magd, transfer_ngaytao, transfer_mapd_id, transfer_magd_id, transfer_giatri, transfer_time_remain, transfer_status, transfer_pd_status, transfer_gd_status) 
         value('$matransfer', '$curDate', $pdid, $gdid, $sotien, '$timeRemain', 'waiting', 'waiting', 'waiting')";

@@ -75,7 +75,6 @@ session_start();
                                                         <td><span class="label text-uppercase <?php echo $listTransfer['transfer_gd_status'];?>"><?php echo $listTransfer['transfer_gd_status'];?></span></td>
                                                         <td <?php if($curDate < $listTransfer['transfer_time_remain']) echo 'class="countdown" id="'.$listTransfer['gd_nguoidung_id'].'"' ;?> data-date='<?php echo $listTransfer['transfer_time_remain'];?>'></td>
                                                         <?php if(strtolower($listTransfer['transfer_pd_status']) == 'waiting'):?>
-                                                            <!-- <td><a class="btn btn-sm btn-info" id="transfered">Transfered</a></td> -->
                                                             <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#dg<?php echo $listTransfer['gd_nguoidung_id'];?>">Transfered</button></td>
                                                             <div class="modal fade" id="dg<?php echo $listTransfer['gd_nguoidung_id'];?>" role="dialog">
                                                             <div class="modal-dialog">
@@ -92,9 +91,8 @@ session_start();
                                                                   <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" onclick="transfer('FF<?php echo $iSTT+$listTransfer['gd_nguoidung_id'];?>', <?php echo $listTransfer['transfer_magd_id'];?>, '<?php echo $listTransfer['transfer_time_remain'];?>')">Xác nhận</button>
                                                                 </div>
                                                               </div>
-                                                              
                                                             </div>
-                                                          </div>
+                                                            </div>
                                                         <?php elseif($curDate > $listTransfer['transfer_time_remain'] && strtolower($listTransfer['transfer_gd_status']) != 'confirmed'):?>
                                                             <td><a class="btn btn-sm btn-danger" id="report" onclick="report(<?php echo $listTransfer['transfer_magd_id'];?>)">Report</a></td>
                                                         <?php else:?>

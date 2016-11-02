@@ -52,3 +52,7 @@ a.title-post:focus {
 .transfered{
     background-color: #337ab7;
 }
+
+.report{
+    background-color: red;
+}

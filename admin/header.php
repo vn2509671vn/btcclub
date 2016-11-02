@@ -3,6 +3,11 @@
 ?>
 <!-- Add start nag-->
 <?php require("../nag.php");?>
+<?php 
+    if($_SESSION['user_role'] != "admin"){
+        header("location: ../../index.php");
+    }
+?>
 <!-- Add end nag-->
 
     <div id="wrapper">
@@ -21,86 +26,6 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge pull-right">42</span><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge pull-right">42</span><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user_check; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -142,13 +67,33 @@
                         <a href="member.php"><i class="fa fa-fw fa-user"></i> Quản lý thành viên</a>
                     </li>
                     <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#tkao"><i class="fa fa-fw fa-user"></i> Quản lý TK ảo <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="tkao" class="collapse">
+                            <li id="virtual-user-nobusy">
+                                <a href="virtual_user_nobusy.php"><i class="fa fa-fw fa-user"></i> Đang rãnh</a>
+                            </li>
+                            <li id="virtual-user-waiting">
+                                <a href="virtual_user_waiting.php"><i class="fa fa-fw fa-user"></i> Đang chờ</a>
+                            </li>
+                            <li id="virtual-user-busy">
+                                <a href="virtual_user_busy.php"><i class="fa fa-fw fa-user"></i> Đang giao dịch</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="tv_report">
+                        <a href="pd_report.php"><i class="fa fa-fw fa-user"></i> Danh sách thành viên PD Report</a>
+                    </li>
+                    <li id="gd_report">
+                        <a href="gd_report.php"><i class="fa fa-fw fa-user"></i> Danh sách thành viên GD Report</a>
+                    </li>
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#thongtin"><i class="fa fa-fw fa-user"></i> Thông tin cá nhân <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="thongtin" class="collapse">
                             <li id="info">
                                 <a href="info.php">Thông tin chi tiết</a>
                             </li>
                             <li>
-                                <a href="thongtin_giaodich.php">Thông tin giao dịch</a>
+                                <a href="commission.php">Lịch sử hoa hồng</a>
                             </li>
                             <li>
                                 <a href="matkhau.php">Đổi mật khẩu</a>

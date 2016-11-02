@@ -1,9 +1,12 @@
-<?php
-    include('../models/session.php');
-?>
 <!-- Add start Header-->
 <?php require("../header.php");?>
 <!-- Add end Header-->
+<!-- Add start Models-->
+<?php require("../models/pd-gd.php");
+    $id = $_SESSION['login_id'];
+    $user = mysql_fetch_array(kiemtrastatus($id));
+?>
+<!-- Add end models -->
         <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -27,7 +30,7 @@
                                         <i class="fa fa-credit-card fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
+                                        <div class="huge"><?php echo $user['nguoidung_sotiennhan'];?></div>
                                         <div>R - WALLET</div>
                                     </div>
                                 </div>
@@ -42,7 +45,7 @@
                                         <i class="fa fa-credit-card fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
+                                        <div class="huge"><?php echo $user['nguoidung_sotienhoahong'];?></div>
                                         <div>C - WALLET</div>
                                     </div>
                                 </div>
@@ -57,7 +60,7 @@
                                         <i class="fa fa-bolt fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
+                                        <div class="huge"><?php echo $user['nguoidung_sopin'];?></div>
                                         <div>PIN BALANCE</div>
                                     </div>
                                 </div>
@@ -72,7 +75,7 @@
                                         <i class="fa fa-users fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
+                                        <div class="huge"><?php echo $user['nguoidung_soluongthanhvien'];?></div>
                                         <div>DOWNLINE TREE</div>
                                     </div>
                                 </div>

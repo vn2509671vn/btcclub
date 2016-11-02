@@ -1,5 +1,5 @@
 .orange-color {
-    color: #f65314 !important;
+    color: #f65314;
 }
 
 .title-post{
@@ -27,4 +27,32 @@ a.title-post:focus {
 
 .padding-top-10 {
     padding-top: 10px;
+}
+
+.waiting{
+    background-color: #90a4ae;
+}
+
+.finished{
+    background-color: #8bc34a;
+}
+
+.matching{
+    background-color: #8bc34a;
+}
+
+.matched{
+    background-color: #8bc34a;
+}
+
+.confirmed{
+    background-color: #337ab7;
+}
+
+.transfered{
+    background-color: #337ab7;
+}
+
+.report{
+    background-color: red;
 }
