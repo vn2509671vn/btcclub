@@ -170,7 +170,7 @@
         }
         else {
             $status = mysql_fetch_array($status);
-            if($status['nguoidung_sotiennhan'] <= 0 || $status['nguoidung_sotienhoahong'] <= 0){
+            if($status['nguoidung_sotiennhan'] <= 0 && $status['nguoidung_sotienhoahong'] <= 0){
                 return false;
             }
             if(strtolower($status['nguoidung_trangthaihoatdong']) != "normal"){

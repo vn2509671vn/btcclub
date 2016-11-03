@@ -51,6 +51,9 @@
                     <li id="matching-num">
                         <a href="matching-num.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh Thủ Công</a>
                     </li>
+                    <li id="matching-hand">
+                        <a href="matching-hand.php"><i class="fa fa-fw fa-cloud-download"></i> Khớp lệnh Tay</a>
+                    </li>
                     <li id="pin">
                         <a href="transfer_pin.php"><i class="fa fa-fw fa-bolt"></i> Quản lý PIN</a>
                     </li>
@@ -60,9 +63,9 @@
                     <li id="member_f1">
                         <a href="member_f1.php"><i class="fa fa-fw fa-users"></i> Quản lý F1</a>
                     </li>
-                    <li id="tree_member">
-                        <a href="f1.php"><i class="fa fa-fw fa-share-alt fa-rotate-90"></i> Quản lí Cây F1</a>
-                    </li>
+                    <!--<li id="tree_member">-->
+                    <!--    <a href="f1.php"><i class="fa fa-fw fa-share-alt fa-rotate-90"></i> Quản lí Cây F1</a>-->
+                    <!--</li>-->
                     <li id="member">
                         <a href="member.php"><i class="fa fa-fw fa-user"></i> Quản lý thành viên</a>
                     </li>

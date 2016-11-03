@@ -12,6 +12,7 @@
     $status = sttaccount($id);
     $lstStatus = $status[0];
     $user  = danhsach();
+    
 ?>
 <!-- Add end models -->
 <!-- Add end Header-->
@@ -72,14 +73,20 @@
                                                                 $k = getparent(intval($dem));
                                                                 $tem = mysql_num_rows($k);
                                                                     $ds_nhanh = sttaccount(intval($dem)); ?>
-                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
+                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_hoten'] .')'; ?></option>
                                                                 <?php }
                                                                 ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Số Pin:</label>
-                                                    <input id="amount"  name="amount" class="form-control" type="input" required placeholder ="Vui lòng nhập số pin.">
+                                                    <select id="amount"  name="amount" class="form-control">
+                                                        <?php
+                                                        $i=5;
+                                                        while($i <= 20){ ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php $i += 5;} ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -138,6 +145,8 @@
             $("#xulystatus").show();
         }
     };
+    
+    
     
     $(document).ready(function() {
         $('#chuyenpin').click(function(){

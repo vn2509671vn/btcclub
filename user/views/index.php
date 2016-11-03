@@ -7,7 +7,7 @@
     $user = userDetail($id);
     $listF1 = getF1($id);
     $countF1 = mysql_num_rows($listF1);
-    if($countF1 >= 10 && $user['nguoidung_danhanthuong'] == 0){
+    if($countF1 >= 10 && $user['nguoidung_danhanthuong'] == 0 && $user['nguoidung_trangthaihoatdong'] == 'normal'){
         $isCoupon = true;
     }
     else {

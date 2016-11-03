@@ -17,12 +17,20 @@
           <div class="pwstrength_viewport_progress"></div>
           <?php if($error == 1){ ?>
             <div class="alert alert-danger" id="error_login">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <strong>Error :</strong>
+                <div>
+                    <?php echo "Username or Password is invalid"; ?>
+                </div>
+            </div>     
+          <?php } else if($error == 2){?>
+            <div class="alert alert-danger" id="error_login">
               <a href="#" class="close" data-dismiss="alert">×</a>
               <strong>Error :</strong>
               <div>
-                  <?php echo "Username or Password is invalid"; ?>
+                  <?php echo "Tài khoản của bạn đã bị khóa."; ?>
               </div>
-            </div>     
+            </div> 
           <?php }?>
           <button type="submit" id="submit" name="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
           <div>
@@ -32,7 +40,7 @@
         </form>
         
         <div class="form-links">
-          <a target="_blank" href="http://btcclub.org">www.btcclub.org</a>
+          <a target="_blank" href="http://btcclub.org">www.btcclub.info</a>
         </div>
       </section>  
       </div>

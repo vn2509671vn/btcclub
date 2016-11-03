@@ -1,5 +1,6 @@
 <?php 
     require("../../config.php");
+    
     function danhsachgd($nguoidung_id){
         $query = "select gd.gd_id, gd.gd_magd, gd.gd_ngaytao, gd.gd_giatri, gd.gd_status, nguoidung.nguoidung_taikhoan as 'taikhoan' from gd, nguoidung where gd.gd_nguoidung_id = nguoidung.nguoidung_id and gd.gd_nguoidung_id = $nguoidung_id";
         return mysql_query($query);
@@ -92,6 +93,32 @@
                 echo 2;
             }
         }
-        
+        else if($action == 'rwallet'){
+            echo '<option>150</option>';
+        }
+        else if($action == 'cwallet'){
+            $userID = $_POST['userID'];
+            $listF1 = getF1($userID);
+            $countF1 = mysql_num_rows($listF1);
+            $output = "";
+            $maxAmount = 0;
+            if($countF1 >= 30){
+                $maxAmount = 350;
+            }
+            else if($countF1 >= 20){
+                $maxAmount = 200;
+            }
+            else if($countF1 >= 10){
+                $maxAmount = 100;
+            }
+            else if ($countF1 >= 5){
+                $maxAmount = 50;
+            }
+            for($i = 50; $i <= $maxAmount; $i+=50 ){
+                $output .= '<option>'.$i.'</option>';
+            }
+            
+            echo $output;
+        }
     }
 ?>

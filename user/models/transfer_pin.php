@@ -15,7 +15,7 @@
         $query = "select nguoidung_trangthaihoatdong, nguoidung_id, nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd,nguoidung_hoten, nguoidung_sdt, 
             nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu,nguoidung_parent_id, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, 
             nguoidung_dakichpd1, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac,
-            nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_soluongthanhvien from nguoidung nd where nd.nguoidung_id=" . $id;
+            nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_hethong from nguoidung nd where nd.nguoidung_id=" . $id;
         return mysql_fetch_array(mysql_query($query));
     }
     function getmk($id){
@@ -44,7 +44,6 @@
         $mk = mysql_real_escape_string($mk);
         $mk = md5($mk);
         $lstmk_chungthuc = getmk($id);
-        // var_dump($lstmk_chungthuc['nguoidung_matkhaugd']);
         $mk_temp = $lstmk_chungthuc['nguoidung_matkhaugd'];
         $mk_temp = stripslashes($mk_temp);
         $mk_temp = mysql_real_escape_string($mk_temp);
@@ -56,12 +55,7 @@
             $isCongpin = updatepin($gioithieu,$sopin_nhan);
             $isLichSuCho = taolichsupin($id, 'PIN Transfer', 0-$amount, $nguoicho_description,'');
             $isLichSuNhan = taolichsupin($gioithieu, 'PIN Transfer', $amount, $nguoinhan_description, $noidung );
-            // if($isTrupin && $isCongpin && $isLichSuCho &&$isLichSuNhan){
-                echo 1;
-            // }
-            // else {
-                // echo 2;
-            // }
+            echo 1;
         }
         else{
             echo 0;

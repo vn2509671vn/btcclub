@@ -57,6 +57,9 @@
     }
     function pathparent($source, $parent, &$newString){
     	if(count($source) > 0) {
+    	    if( mysql_num_rows(getparent($parent)) != 3){
+    	        $newString .= $parent . ',';
+    	    }
     		foreach ($source as $key => $value){
     		    if( mysql_num_rows(getparent($source[$key]['nguoidung_id'])) != 3){
         			if($value['nguoidung_parent_id'] == $parent){

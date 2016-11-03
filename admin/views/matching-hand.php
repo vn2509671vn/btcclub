@@ -62,7 +62,7 @@ require("../models/pd-gd.php");
                                                                 <td><?php echo $listPD['pd_ngaytao'];?></td>
                                                                 <td><?php echo $listPD['pd_mapd'];?></td>
                                                                 <td class="pd_filled" data-id="<?php echo $listPD['pd_id'];?>"><?php echo $listPD['pd_notfilled'];?></td>
-                                                                <td>---</td>
+                                                                <td><input type="checkbox" value="<?php echo $listPD['pd_id'];?>" name="pdCheckbox"></td>
                                                             <?php $pdSTT++;?>
                                                             </tr>
                                                             <?php endwhile;?>
@@ -105,7 +105,7 @@ require("../models/pd-gd.php");
                                                                 <td><?php echo $listGD['gd_ngaytao'];?></td>
                                                                 <td><?php echo $listGD['gd_magd'];?></td>
                                                                 <td class="amount" data-id="<?php echo $listGD['gd_id'];?>"><?php echo $listGD['gd_giatri'];?></td>
-                                                                <td>---</td>
+                                                                <td><input type="checkbox" value="<?php echo $listGD['gd_id'];?>" name="gdCheckbox"></td>
                                                             <?php $gdSTT++;?>
                                                         </tr>
                                                             <?php endwhile;?>
@@ -115,11 +115,10 @@ require("../models/pd-gd.php");
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <!-- Area of function-->
-                                <div class="form-inline form-group">
-                                    <label>Số lượng PD: </label>
-                                    <input type=text maxlength=4 onkeypress='return isNumberKey(event)' id="inputPD" class="form-control">
-                                    <button class="btn btn-warning" id="autoMatching">Matching</button>
+                                <div class="col-md-12">
+                                    <button class="btn btn-warning" id="Matching">Matching</button>
                                 </div>
                                 <!-- End Content of post -->
                             </div>
@@ -140,13 +139,6 @@ require("../models/pd-gd.php");
 
 </html>
 <script type="text/javascript">
-    function isNumberKey(evt){
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
-    
     function khoplenh($gd_id, $pd_id, $sotien, $pd_chuacho){
         $.ajax({
                 url:"../models/pd-gd.php", 
@@ -171,7 +163,7 @@ require("../models/pd-gd.php");
                 }  
         });
     }
-    selectorMenu("matching-num");
+    selectorMenu("matching-hand");
     $(document).ready(function() {
       $('#table-pd').DataTable({
         "searching": true,
@@ -182,38 +174,33 @@ require("../models/pd-gd.php");
         "info": true,
       });
       
-      $('#autoMatching').click(function(){
+      $('#Matching').click(function(){
          var numRowCho = $('#table-pd > tbody > tr').length;
          var numRowNhan = $('#table-gd > tbody > tr').length;
          var arrCho = new Array();
          var arrNhan = new Array();
-         var numPD = $('#inputPD').val();
-         if(numPD > numRowCho - 3){
-            var tmp = numRowCho - 2;
-            alert("Bạn chỉ có thể nhập số lượng PD nhỏ hơn: " + tmp);
-            return;    
-         }
-         
-         $('.pd_filled').each(function(numIndex) {
-             var tiencho = parseInt($(this).html());
-             var pdID = $(this).attr("data-id");
-             if(numIndex < numPD){
-                arrCho.push({
-                    "pd_id": pdID,
-                    "pd_filled": tiencho
-                });
-                numIndex++;
-             }
+         $('input[name="pdCheckbox"]:checked').each(function() {
+             var tiencho = parseInt($(this).closest('tr').find('td.pd_filled').html());
+             var pdID = this.value;
+             arrCho.push({
+                 "pd_id": pdID,
+                 "pd_filled": tiencho
+             });
          });
          
-         $('.amount').each(function() {
-             var tiennhan = parseInt($(this).html());
-             var gdID = $(this).attr("data-id");
+         $('input[name="gdCheckbox"]:checked').each(function() {
+             var tiennhan = parseInt($(this).closest('tr').find('td.amount').html());
+             var gdID = this.value;
              arrNhan.push({
                  "gd_id": gdID,
                  "amount": tiennhan
              });
          });
+         
+         if(arrCho.length > numRowCho - 3){
+             alert("Phòng cho phải có ít nhất 3 người!!! Vui lòng giảm bớt số người cho đã chọn lại");
+             return;
+         }
          
          for(var i = 0; i < arrNhan.length; i++){
              var tiennhan = arrNhan[i].amount;

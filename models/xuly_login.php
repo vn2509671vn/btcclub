@@ -22,14 +22,19 @@ if (isset($_POST['submit'])) {
         $listuser = mysql_fetch_array($query);
         $rows = mysql_num_rows($query);
         if ($rows == 1) {
-            $_SESSION['login_user']=$username; // Initializing Session
-            $_SESSION['login_id']=$listuser['nguoidung_id']; // Initializing Session
-            $_SESSION['user_role']=$listuser['nguoidung_quyen'];
-            if($_SESSION['user_role'] == 'admin'){
-                header("location: admin/index.php"); // Redirecting To Admin page
+            if($listuser['nguoidung_trangthaihoatdong'] == 'report'){
+                $error = 2;
             }
-            else {
-                header("location: user/index.php"); // Redirecting To Admin page
+            else{
+                $_SESSION['login_user']=$username; // Initializing Session
+                $_SESSION['login_id']=$listuser['nguoidung_id']; // Initializing Session
+                $_SESSION['user_role']=$listuser['nguoidung_quyen'];
+                if($_SESSION['user_role'] == 'admin'){
+                    header("location: admin/index.php"); // Redirecting To Admin page
+                }
+                else {
+                    header("location: user/index.php"); // Redirecting To Admin page
+                }
             }
         } else {
             $error = 1;

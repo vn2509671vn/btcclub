@@ -20,10 +20,6 @@
     <link href="../css/login.css" rel="stylesheet"><!-- Them vao ngay 21/10/2016 Ut -->
     <!-- <link rel="stylesheet" type="text/css" href="../css/folder_style.css"><!-- Them vao ngay 21/10/2016 Ut -->
     
-      <!-- Plugin for autocomplete -->
-  <script src="../js/currency-autocomplete.js"></script>
-  <script src="../js/jquery.autocomplete.js"></script>
-    
     <!-- Custom Fonts -->
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
@@ -42,6 +38,7 @@
 	<!-- <script type="text/javascript" src="../js/menudata.js"></script><!-- Them vao ngay 21/10/2016 Ut -->
 	<!-- <script type="text/javascript" src="../js/menutree.js"></script><!-- Them vao ngay 21/10/2016 Ut -->
     <!-- Bootstrap Core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.js"></script>
     
@@ -49,6 +46,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="../js/dataTables.bootstrap.js"></script>
+    
+    <!-- Plugin for autocomplete -->
+    <script src="../js/currency-autocomplete.js"></script>
+    <script src="../js/jquery.autocomplete.js"></script>
+    
 </head>
 <?php 
     require('../../config.php');

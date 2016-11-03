@@ -51,23 +51,21 @@ require("../models/pd-gd.php");
                                     <div class="col-sm-10">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="rwallet" id="rwallet" value="rwallet" checked>R - WALLET
+                                                <input type="radio" name="radio" id="rwallet" value="rwallet" checked>R - WALLET
                                             </label>
                                         </div>
-                                        <!--<div class="radio">-->
-                                        <!--    <label>-->
-                                        <!--        <input type="radio" name="cwallet" id="cwallet" value="cwallet">C - WALLET-->
-                                        <!--    </label>-->
-                                        <!--</div>-->
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="cwallet" value="cwallet">C - WALLET
+                                            </label>
+                                        </div>
                                     </div>
                                   </div>
                                   <div class="form-group">
                                     <label class="control-label col-sm-2">Amount:</label>
                                     <div class="col-sm-10"> 
                                         <select class="form-control" id="amount">
-                                            <?php for($i = $minRwallet; $i <= $userRWallet; $i+=50 ){?>
-                                                <option><?php echo $i;?></option>
-                                            <?php };?>
+                                            
                                         </select>
                                     </div>
                                   </div>
@@ -109,8 +107,31 @@ require("../models/pd-gd.php");
 </html>
 <script type="text/javascript">
     selectorMenu("gd");
+    $('input[type=radio]').change(function(){
+        var action  = this.value;
+        var userID = <?php echo $user['nguoidung_id'];?>;
+        $.ajax({
+            url:"../models/gd.php",  
+            method:"post",  
+            data:{
+                action: action,
+                userID: userID
+            },  
+            dataType:"text",  
+            success:function(data)
+            {
+                if(data){
+                    $('#amount').html(data);
+                }
+                else{
+                    $('#amount').html("");
+                }
+            }
+        });
+    });
+    
     $('#submit').click(function(){
-        var type = $('input[type=radio]').val();
+        var type = $('input[type=radio]:checked').val();
         var amount = $('#amount').val();
         var pass = $('#pwd').val();
         var userid = '<?php echo $id;?>';

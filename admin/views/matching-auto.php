@@ -149,7 +149,7 @@ require("../models/pd-gd.php");
                     pdid: $pd_id,
                     sotien: $sotien,
                     pd_chuacho: $pd_chuacho,
-                    matransfer: 'T<?php echo $user.date("YmdHs");?>'
+                    matransfer: ''
                 },  
                 dataType:"text",  
                 success:function(data)  

@@ -76,9 +76,13 @@
                                                     <label>Họ Tên:</label>
                                                     <input class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_hoten'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
-                                                 <div class="form-group">
+                                                <div class="form-group">
                                                     <label>Số điện thoại:</label>
                                                     <input name="nguoidung_sdt" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>CMND:</label>
+                                                    <input name="nguoidung_sdt" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_cmnd'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email:</label>
