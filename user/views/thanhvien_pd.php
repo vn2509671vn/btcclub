@@ -112,7 +112,7 @@
 
 </html>
 <script type="text/javascript">
-    selectorMenu("thanhvien");
+    selectorMenu("thanhvien_pd");
     $('#table-user').DataTable({
         "searching": true,
         "info": true,

@@ -8,6 +8,7 @@ session_start();
     $amount = $_GET['amount'];
     $transferid = $_GET['transferid'];
     $user = userDetail($userid);
+    $userGioiThieu = userDetail($user['nguoidung_gioithieu']);
 ?>
 <!-- Add end models -->
 <!-- Add end Header-->
@@ -46,14 +47,19 @@ session_start();
                             <div class="panel-body">
                                 <!-- Content of post -->
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                       <h4>Received Bitcoin Account</h4>
                                       <dl>
-                                        <dt>Bitcoin Link</dt>
-                                        <dd><a class="orange-color" href="<?php echo $user['nguoidung_btclink'];?>">Vui lòng click vào đây!!</a></dd>
+                                        <dt>Địa chỉ ví Bitcoin Link</dt>
+                                        <dd><?php echo $user['nguoidung_btclink'];?></dd>
                                       </dl>
+                                      <dl>
+                                        <dt>Địa chỉ ví Bitcoin QR</dt>
+                                        <dd><img src="<?php echo "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=" . $user['nguoidung_btclink'] . "&choe=UTF-8";?>" alt="Smiley face" height="200" width="200"></dd>
+                                      </dl>
+                                      
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                       <h4>Tranfer Information</h4>
                                       <dl>
                                         <dt>Account Transfer</dt>
@@ -64,6 +70,17 @@ session_start();
                                         <dd><?php echo $user['nguoidung_sdt'];?></dd>
                                         <dt>Amount</dt>
                                         <dd><code><?php echo number_format($amount);?></code></dd>
+                                      </dl>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <h4>UPLINE</h4>
+                                      <dl>
+                                        <dt>Account</dt>
+                                        <dd><?php echo $userGioiThieu['nguoidung_taikhoan'];?></dd>
+                                        <dt>Email</dt>
+                                        <dd><?php echo $userGioiThieu['nguoidung_mail'];?></dd>
+                                        <dt>Phone</dt>
+                                        <dd><?php echo $userGioiThieu['nguoidung_sdt'];?></dd>
                                       </dl>
                                     </div>
                                   </div>

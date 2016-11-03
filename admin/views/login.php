@@ -2,7 +2,8 @@
 <?php require("../nag.php");?>
 <?php include('../models/xuly_login.php'); 
   if(isset($_SESSION['login_user'])){
-    header("location: index.php");
+    // header("location: index.php");
+    echo "<script>window.location.replace('index.php')</script>";
   }
 ?>
 <!-- Add end Header-->

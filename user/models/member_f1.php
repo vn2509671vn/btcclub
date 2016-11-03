@@ -43,6 +43,13 @@
             where pd.pd_nguoidung_id IN ($ds_thanhvien) and transfer_time_remain > now() and transfer_pd_status not like 'transfered'";
             return mysql_query($query);
     }
+    function thanhvien_gd($ds_thanhvien){
+        $query= "select * from gd 
+            left join transfer_pd_gd giaodich on gd.gd_id = giaodich.transfer_magd_id
+            left join nguoidung nd on gd.gd_nguoidung_id = nd.nguoidung_id
+            where gd.gd_nguoidung_id IN ($ds_thanhvien) and transfer_time_remain > now() and transfer_gd_status not like 'confirmed'";
+            return mysql_query($query);
+    }
     function count_id(){
         $query="select count(nguoidung_id) from nguoidung";
         return mysql_query($query);

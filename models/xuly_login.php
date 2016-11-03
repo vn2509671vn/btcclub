@@ -30,10 +30,12 @@ if (isset($_POST['submit'])) {
                 $_SESSION['login_id']=$listuser['nguoidung_id']; // Initializing Session
                 $_SESSION['user_role']=$listuser['nguoidung_quyen'];
                 if($_SESSION['user_role'] == 'admin'){
-                    header("location: admin/index.php"); // Redirecting To Admin page
+                    // header("location: admin/index.php"); // Redirecting To Admin page
+                    echo "<script>window.location.replace('admin/index.php')</script>";
                 }
                 else {
-                    header("location: user/index.php"); // Redirecting To Admin page
+                    // header("location: user/index.php"); // Redirecting To Admin page
+                    echo "<script>window.location.replace('user/index.php')</script>";
                 }
             }
         } else {

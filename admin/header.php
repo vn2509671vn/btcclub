@@ -5,7 +5,8 @@
 <?php require("../nag.php");?>
 <?php 
     if($_SESSION['user_role'] != "admin"){
-        header("location: ../../index.php");
+        //header("location: ../../index.php");
+        echo "<script>window.location.replace('../../index.php')</script>";
     }
 ?>
 <!-- Add end nag-->

@@ -25,7 +25,8 @@ if (isset($_POST['submit'])) {
             $_SESSION['login_user']=$username; // Initializing Session
             $_SESSION['login_id']=$listuser['nguoidung_id']; // Initializing Session
             $_SESSION['user_role']=$listuser['nguoidung_quyen'];
-            header("location: index.php"); // Redirecting To Other Page
+            // header("location: index.php"); // Redirecting To Other Page
+            echo "<script>window.location.replace('index.php')</script>";
         } else {
             $error = 1;
         }

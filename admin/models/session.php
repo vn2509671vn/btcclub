@@ -9,6 +9,7 @@ $ses_sql = mysql_query("select * from nguoidung where nguoidung.nguoidung_taikho
 $row = mysql_fetch_assoc($ses_sql);
 $login_session =$row['nguoidung_taikhoan'];
 if(!isset($login_session)){
-    header('Location: ../views/login.php'); // Redirecting To Home Page
+    // header('Location: ../views/login.php'); // Redirecting To Home Page
+    echo "<script>window.location.replace('../views/login.php')</script>";
 }
 ?>
