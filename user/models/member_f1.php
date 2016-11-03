@@ -9,16 +9,16 @@
         return mysql_query($query);
     }
     function danhsach(){
-        $query = "SELECT nguoidung_id, nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd, nguoidung_hoten, nguoidung_sdt, nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu, nguoidung_parent_id, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, nguoidung_dakichpd1, nguoidung_trangthaihoatdong, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac, nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_soluongtaikhoan, nguoidung_hethong FROM nguoidung where nguoidung_taikhoan not like 'admin'";   
+        $query = "SELECT * FROM nguoidung where nguoidung_quyen not in ('admin')";   
         return mysql_query($query);
     }
     // F1 la nguoi gioi thieu truc tiep
     function danhsach_f1($id){ 
-        $query = "SELECT nguoidung_id, nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd, nguoidung_hoten, nguoidung_sdt, nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu, nguoidung_parent_id, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, nguoidung_dakichpd1, nguoidung_trangthaihoatdong, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac, nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_soluongthanhvien FROM nguoidung where nguoidung_gioithieu = $id";   
+        $query = "SELECT * FROM nguoidung where nguoidung_gioithieu = $id";   
         return mysql_query($query);
     }
     function getnhanh($id){
-        $checkchild = "select * from nguoidung where nguoidung_parent_id = " . $id;  
+        $checkchild = "select * from nguoidung where nguoidung_parent_id = $id";  
         $countchild = mysql_query($checkchild);
         // $count = mysql_num_rows($countchild);
         // if ($count<2) {
@@ -111,5 +111,5 @@
     		$newString .= '</ul>';
     	}
     	return $newString;
-    }   
+    }
 ?>

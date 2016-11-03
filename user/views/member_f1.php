@@ -5,11 +5,11 @@
 <?php 
     require("../models/member_f1.php");
     $array_id = mysql_fetch_array(getid($user_check));
-    $id = $array_id[0];
+    $id = $_SESSION['login_id'];
     $user = danhsach_f1($id);
-    $rowUser = 1;
-    if(!$user || mysql_num_rows($user) == 0){
-        $rowUser = 0;
+    $rowUser = false;
+    if($user && mysql_num_rows($user) != 0){
+        $rowUser = true;
     }
 ?>
 <!-- Add end models -->
@@ -59,7 +59,7 @@
                                         </thead>
                                         <tbody>
                                             
-                                            <?php if ($rowUser == 0){?>
+                                            <?php if ($rowUser == false){?>
                                                     <tr><td colspan="8" class="text-center">No item</td></tr>
                                             <?php }else{?>
                                                 <?php $iSTT = 1;?>
@@ -70,7 +70,7 @@
                                                     <td><?php echo $listUser['nguoidung_hoten'];?></td>
                                                     <td><?php echo $listUser['nguoidung_mail'];?></td>
                                                     <td><?php echo $listUser['nguoidung_sdt'];?></td>
-                                                    <td><?php echo $listUser['nguoidung_sdt'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_capbac'];?></td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>
                                                     <?php $iSTT++;?>
                                                 </tr>

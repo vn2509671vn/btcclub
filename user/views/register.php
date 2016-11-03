@@ -8,7 +8,7 @@
     $id = $array_id[0];
     $user = danhsach();
     $lstidnhanh = getnhanh($id);
-    $taikhoan="";
+    $taikhoan="";// 
     $count_id = mysql_fetch_array(count_id());
     $count =  $count_id[0] + 1;
     if($count_id[0] < 99){

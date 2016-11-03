@@ -69,9 +69,9 @@ if ($_POST) {
     $nguoidung_gioithieu = $_POST['nguoidung_gioithieu'];
     $nguoidung_parent_id = $_POST['nguoidung_parent_id'];
     $nguoidung_matkhaudn = $_POST['nguoidung_matkhaudn'];
-        $nguoidung_matkhaudn = md5($nguoidung_matkhaudn);
+    $nguoidung_matkhaudn = md5($nguoidung_matkhaudn);
     $nguoidung_matkhaugd = $_POST['nguoidung_matkhaugd'];  
-        $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
+    $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
     $nguoidung_hoten = $_POST['nguoidung_hoten'];
     $nguoidung_sdt = $_POST['nguoidung_sdt'];
     $nguoidung_mail = $_POST['nguoidung_mail'];
@@ -88,7 +88,7 @@ if ($_POST) {
             if($countNhanh < 2){
                 
                 $nguoidung_loainhanh = checknhanh($nguoidung_parent_id);
-                $isCreate = createUser($nguoidung_taikhoan, $nguoidung_matkhaudn, $nguoidung_matkhaugd, $nguoidung_hoten, $nguoidung_sdt, $nguoidung_mail,$nguoidung_cmnd, $nguoidung_diachi, $nguoidung_btclink,$nguoidung_gioithieu, $nguoidung_parent_id, $nguoidung_loainhanh);
+                $isCreate = createUser($nguoidung_taikhoan, $nguoidung_matkhaudn, $nguoidung_matkhaugd, $nguoidung_hoten, $nguoidung_sdt, $nguoidung_cmnd, $nguoidung_mail, $nguoidung_diachi, $nguoidung_btclink,$nguoidung_gioithieu, $nguoidung_parent_id, $nguoidung_loainhanh);
                 $lstID = getid($nguoidung_taikhoan);
                 $UserID = $lstID['nguoidung_id'];
                 $datetime_GT = new DateTime();
