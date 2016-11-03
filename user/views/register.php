@@ -8,24 +8,6 @@
     $id = $array_id[0];
     $user = danhsach();
     $lstidnhanh = getnhanh($id);
-    $taikhoan="";// 
-    $count_id = mysql_fetch_array(count_id());
-    $count =  $count_id[0] + 1;
-    if($count_id[0] < 99){
-        $taikhoan = "btc0000"  . $count;
-    }
-    elseif ($count_id[0] < 999) {
-       $taikhoan = "btc000"  . $count;
-    }
-    elseif ($count_id[0] < 9999) {
-       $taikhoan = "btc00" . $count;
-    }
-    elseif ($count_id[0] < 99999){
-        $taikhoan = "btc0" . $count;
-    }
-    else {
-        $taikhoan = "btc" . $count;
-    }
     $status = sttaccount($id);
     $lstStatus = $status[0];
 ?>
@@ -94,6 +76,17 @@
                                                             $newString = str_replace('<ul></ul>', '', $newString);
                                                             $newString = trim($newString);
                                                             $ds = explode(',',$newString);
+                                                            $parent = getparent($id);
+                                                            // $lstparent = mysql_fetch_array($parent);
+                                                            $numparent = mysql_num_rows($parent);
+                                                            if($numparent != 2 ){
+                                                                $ds_nhanh_parent = sttaccount($id); ?>
+                                                        ?> 
+                                                                <option value="<?php echo $ds_nhanh_parent['nguoidung_id']; ?>">
+                                                                    <?php echo $ds_nhanh_parent['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh_parent['nguoidung_loainhanh'] .')'; ?>
+                                                                </option>
+                                                        <?php  
+                                                            }
                                                             for($i=0; $i < count($ds)-1;$i++){
                                                                 $dem = $ds[$i];
                                                                 $k = getparent(intval($dem));
@@ -102,17 +95,16 @@
                                                                     $ds_nhanh = sttaccount(intval($dem)); ?>
                                                                     <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
                                                                 <?php }
-                                                                    else{
-                                                                        echo '';
-                                                                    }
+                                                                    // else{
+                                                                    //     echo '';
+                                                                    // }
                                                                 }
-                                                                ?>
-                                                       
+                                                                ?>                                                       
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Tài khoản:</label>
-                                                    <input  name="nguoidung_taikhoan" class="form-control" type="text" required value="<?php echo $taikhoan;?>">
+                                                    <input  name="nguoidung_taikhoan" class="form-control" type="text" required value="">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mật khẩu đăng nhập:</label>
