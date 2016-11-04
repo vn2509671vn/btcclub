@@ -3,8 +3,8 @@
 <!-- Add end Header-->
 <!-- Add start Models-->
 <?php 
-    require("../models/user.php");
-    $getList = getVirtualUserWaiting();
+    require("../models/transfer-report.php");
+    $getList = getListTransferWaiting();
     if(!$getList || mysql_num_rows($getList) == 0){
         $rowList = 0;
     }
@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header orange-color">
-                            Quản Lí Tài Khoản Ảo - WAITING
+                            Quản lý giao dịch
                         </h1>
                     </div>
                 </div>
@@ -35,25 +35,37 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
-                                                <th>ACCOUNT ID</th>
-                                                <th>BTC Link</th>
-                                                <th>EMAIL</th>
-                                                <th>STATUS</th>
+                                                <th>CREATE DATE</th>
+                                                <th>PD STATUS</th>
+                                                <th>GD STATUS</th>
+                                                <th>TRANSFER STATUS</th>
+                                                <th>FINISH DATE</th>
+                                                <th>ACTION</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
                                             <?php if ($rowList == 0){?>
-                                                    <tr><td colspan="5" class="text-center">No item</td></tr>
+                                                    <tr><td colspan="7" class="text-center">No item</td></tr>
                                             <?php }else{?>
                                                 <?php $iSTT = 1;?>
-                                                <?php while($User = mysql_fetch_array($getList)){?>
+                                                <?php while($detailTransfer = mysql_fetch_array($getList)){?>
                                                 <tr>
                                                     <td><?php echo $iSTT;?></td>
-                                                    <td><?php echo $User['nguoidung_taikhoan'];?></td>
-                                                    <td><?php echo $User['nguoidung_btclink'];?></td>
-                                                    <td><?php echo $User['nguoidung_mail'];?></td>
-                                                    <td><span class="label text-uppercase waiting">WAITING</span></td>
+                                                    <td><?php echo $detailTransfer['transfer_ngaytao'];?></td>
+                                                    <td><?php echo $detailTransfer['transfer_pd_status'];?></td>
+                                                    <td><?php echo $detailTransfer['transfer_gd_status'];?></td>
+                                                    <td><?php echo $detailTransfer['transfer_status'];?></td>
+                                                    <td><?php echo $detailTransfer['transfer_time_remain'];?></td>
+                                                    <td><button type="button" class="btn btn-info btn-sm" onclick="
+                                                    proceed(
+                                                        <?php echo $detailTransfer['transfer_mapd_id'];?>,
+                                                        '<?php echo $detailTransfer['transfer_pd_status'];?>',
+                                                        <?php echo $detailTransfer['transfer_magd_id'];?>,
+                                                        '<?php echo $detailTransfer['transfer_gd_status'];?>',
+                                                        <?php echo $detailTransfer['transfer_id'];?>,
+                                                        <?php echo $detailTransfer['transfer_giatri'];?>
+                                                    )">PROCEED</button></td>
                                                     <?php $iSTT++;?>
                                                 </tr>
                                                 <?php }?>
@@ -79,7 +91,33 @@
 
 </html>
 <script type="text/javascript">
-    selectorMenu("virtual-user-waiting");
+    function proceed(pdId, pdStatus, gdId, gdStatus, transferID, amount){
+        $.ajax({
+                url:"../models/transfer-report.php", 
+                method:"post",  
+                data:{
+                    action: 'proceedTransfer',
+                    pdId: pdId,
+                    pdStatus: pdStatus,
+                    gdId: gdId,
+                    gdStatus: gdStatus,
+                    transferID: transferID,
+                    amount: amount
+                },  
+                dataType:"text",  
+                success:function(data)  
+                {  
+                    if(data){
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
+                    }
+                }  
+            });
+    }
+    
+    selectorMenu("transfer-report");
     $('#table-user').DataTable({
         "searching": true,
         "info": true,

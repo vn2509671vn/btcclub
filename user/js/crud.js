@@ -14,8 +14,9 @@ $(document).ready(function(){
                                             '<strong>Thông báo: </strong>' + 
                                             '<div>' + data+ '</div>' + '</div>');
 			     $("#emp-SaveForm")[0].reset();
+			     window.location.reload();
 		     });	
-		 });   
+        });   
 	     return false;
     });
 	/* Data Insert Ends Here */

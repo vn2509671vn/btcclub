@@ -4,7 +4,6 @@
 <!-- Add start Models-->
 <?php 
     require("../models/member_f1.php");
-    $array_id = mysql_fetch_array(getid($user_check));
     $id = $_SESSION['login_id'];
     $user = danhsach_f1($id);
     $rowUser = false;

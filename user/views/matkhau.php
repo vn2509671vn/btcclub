@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header orange-color">
-                            Đăng Kí Thành Viên
+                            Cập Nhật Mật Khẩu
                         </h1>
                         <div class="page-content">
                             <ol class="breadcrumb">
@@ -55,22 +55,22 @@
                                             <input style="display:none" class="form-control" name="id" id="id" type="text" readonly value="<?php echo $id;?>">
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
-                                                    <label>Mật khẩu đăng nhập:</label>
-                                                    <input  name="nguoidung_matkhaudn" class="form-control" type="password" required placeholder ="Vui lòng nhập mật khẩu đăng nhập.">
+                                                    <label>Mật khẩu đăng nhập mới:</label>
+                                                    <input  name="nguoidung_matkhaudn" class="form-control" type="password"  placeholder ="Vui lòng nhập mật khẩu đăng nhập.">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Nhập lại mật khẩu đăng nhập:</label>
-                                                    <input  name="nguoidung_matkhaudn_repeat" class="form-control" type="password" required placeholder ="Vui lòng nhập lại mật khẩu đăng nhập.">
+                                                    <label>Nhập lại mật khẩu đăng nhập mới:</label>
+                                                    <input  name="nguoidung_matkhaudn_repeat" class="form-control" type="password"  placeholder ="Vui lòng nhập lại mật khẩu đăng nhập.">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
-                                                    <label>Mật khẩu giao dịch:</label>
-                                                    <input  name="nguoidung_matkhaugd" class="form-control" type="password" required placeholder ="Vui lòng nhập mật khẩu giao dịch.">
+                                                    <label>Mật khẩu giao dịch mới:</label>
+                                                    <input  name="nguoidung_matkhaugd" class="form-control" type="password"  placeholder ="Vui lòng nhập mật khẩu giao dịch.">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Nhập lại mật khẩu giao dịch:</label>
-                                                    <input  name="nguoidung_matkhaugd_repeat" class="form-control" type="password" required placeholder ="Vui lòng nhập lại mật khẩu giao dịch.">
+                                                    <label>Nhập lại mật khẩu giao dịch mới:</label>
+                                                    <input  name="nguoidung_matkhaugd_repeat" class="form-control" type="password" placeholder ="Vui lòng nhập lại mật khẩu giao dịch.">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12">

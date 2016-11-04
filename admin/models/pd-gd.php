@@ -6,12 +6,12 @@
     }
     
     function danhsachpd(){
-        $query = "select pd.*, nguoidung.* from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and pd.pd_notfilled != 0 ORDER BY pd.pd_ngaytao ASC";
+        $query = "select pd.*, nguoidung.* from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and nguoidung.nguoidung_trangthaihoatdong = 'normal' and pd.pd_notfilled != 0 ORDER BY pd.pd_ngaytao ASC";
         return mysql_query($query);
     }
     
     function danhsachgd(){
-        $query = "select gd.*, nguoidung.* from gd, nguoidung where gd.gd_nguoidung_id = nguoidung.nguoidung_id and gd.gd_status = 'waiting' ORDER BY gd.gd_ngaytao ASC";
+        $query = "select gd.*, nguoidung.* from gd, nguoidung where gd.gd_nguoidung_id = nguoidung.nguoidung_id and nguoidung.nguoidung_trangthaihoatdong = 'normal' and gd.gd_status = 'waiting' ORDER BY gd.gd_ngaytao ASC";
         return mysql_query($query);
     }
     

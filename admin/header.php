@@ -70,6 +70,9 @@
                     <li id="member">
                         <a href="member.php"><i class="fa fa-fw fa-user"></i> Quản lý thành viên</a>
                     </li>
+                    <li id="transfer-report">
+                        <a href="transfer-report.php"><i class="fa fa-fw fa-users"></i> Quản lý giao dịch</a>
+                    </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#tkao"><i class="fa fa-fw fa-user"></i> Quản lý TK ảo <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="tkao" class="collapse">

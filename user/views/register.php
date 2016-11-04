@@ -137,7 +137,7 @@
                                                     <input name="nguoidung_cmnd" required class="form-control" type="number">
                                                 </div>
                                                  <div class="form-group">
-                                                    <label>Đường dẫn ví Bitcoin:</label>
+                                                    <label>Địa chỉ ví Bitcoin:</label>
                                                     <input name="nguoidung_btclink" required class="form-control" type="text">
                                                 </div>
                                             </div>

@@ -48,17 +48,20 @@
             return mysql_query($query);
     }
     function get_pd_report(){
-        $query= "select nd.nguoidung_taikhoan, nd.nguoidung_hoten, nd.nguoidung_sdt, nd.nguoidung_btclink, nguoidung_trangthaihoatdong, giaodich.transfer_ngaytao,transfer_time_remain,transfer_magd,transfer_pd_status,  nguoidung_id,  nguoidung_gioithieu, nguoidung_parent_id, nguoidung_loainhanh, nguoidung_giatricanbang, nguoidung_phantramhoahong, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, nguoidung_dakichpd1, nguoidung_trangthaihoatdong, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac, nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_hethong from pd 
+        $query= "select nd.nguoidung_taikhoan, nd.nguoidung_hoten, nd.nguoidung_sdt, nd.nguoidung_btclink, nguoidung_trangthaihoatdong, giaodich.transfer_ngaytao,transfer_time_remain,transfer_magd,transfer_pd_status,  nguoidung_id,  nguoidung_gioithieu, nguoidung_parent_id, nguoidung_loainhanh
+        , nguoidung_giatricanbang, nguoidung_phantramhoahong, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, nguoidung_dakichpd1, nguoidung_trangthaihoatdong
+        , nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac, nguoidung_sopin, nguoidung_sopindadung, 
+        , nguoidung_sotienhoahong, nguoidung_hethong from pd 
             left join transfer_pd_gd giaodich on pd.pd_id = giaodich.transfer_mapd_id
             left join nguoidung nd on pd.pd_nguoidung_id = nd.nguoidung_id
-            where transfer_pd_status like 'report'";
+            where transfer_gd_status like 'report'";
         return mysql_query($query);
     }
     function get_gd_report(){
         $query= "select nd.nguoidung_taikhoan, nd.nguoidung_hoten, nd.nguoidung_sdt, nd.nguoidung_btclink, nguoidung_trangthaihoatdong, giaodich.transfer_ngaytao,transfer_time_remain,transfer_magd,transfer_gd_status,  nguoidung_id,  nguoidung_gioithieu, nguoidung_parent_id, nguoidung_loainhanh, nguoidung_giatricanbang, nguoidung_phantramhoahong, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, nguoidung_dakichpd1, nguoidung_trangthaihoatdong, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac, nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_hethong from gd 
             left join transfer_pd_gd giaodich on gd.gd_id = giaodich.transfer_magd_id
             left join nguoidung nd on gd.gd_nguoidung_id = nd.nguoidung_id
-            where transfer_gd_status like 'report'";
+            where transfer_pd_status like 'report'";
         return mysql_query($query);
     }
     function count_id(){

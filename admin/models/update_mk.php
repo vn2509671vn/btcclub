@@ -31,7 +31,7 @@ if ($_POST) {
     
     try 
     {
-        if($_POST['nguoidung_matkhaudn']){
+        if($_POST['nguoidung_matkhaudn'] && isset($_POST['nguoidung_matkhaudn'])){
             if(strcasecmp($nguoidung_matkhaudn,$nguoidung_matkhaudn_repeat) == 0)
             {
                 
@@ -47,7 +47,7 @@ if ($_POST) {
                 $ketquaupdate = $ketquaupdate . "Mật khẩu đăng nhập không khớp. ";
             }
         }
-        if($_POST['nguoidung_matkhaugd']){
+        if($_POST['nguoidung_matkhaugd'] && isset($_POST['nguoidung_matkhaugd'])){
             if(strcasecmp($nguoidung_matkhaugd, $nguoidung_matkhaugd_repeat) == 0)
             {
                 $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
