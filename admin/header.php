@@ -1,13 +1,21 @@
 <?php
-    include('../models/session.php');
+    //include('../models/session.php');
 ?>
 <!-- Add start nag-->
 <?php require("../nag.php");?>
+<?php require("../models/homepage.php");?>
 <?php 
+    session_start();
+    if(!isset($_SESSION['user_role'])){
+        echo "<script>window.location.replace('../../index.php')</script>";
+    }
     if($_SESSION['user_role'] != "admin"){
         //header("location: ../../index.php");
         echo "<script>window.location.replace('../../index.php')</script>";
     }
+    
+    $id = $_SESSION['login_id'];
+    $userDetail = getInfoUser($id);
 ?>
 <!-- Add end nag-->
 
@@ -28,7 +36,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user_check; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userDetail['nguoidung_taikhoan']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="info.php"><i class="fa fa-fw fa-user"></i> Profile</a>

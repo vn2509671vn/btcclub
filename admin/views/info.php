@@ -4,8 +4,7 @@
 <!-- Add start Models-->
 <?php 
     require("../models/member_f1.php");
-    $array_id = mysql_fetch_array(getid($user_check));
-    $id = $array_id[0];
+    $id = $_SESSION['login_id'];
     $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
     $lstStatus = $status[0];
@@ -78,20 +77,20 @@
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Số điện thoại:</label>
-                                                    <input name="nguoidung_sdt" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_sdt" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email:</label>
-                                                    <input name="nguoidung_mail" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_mail'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_mail" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_mail'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                     
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Địa chỉ:</label>
-                                                    <input name="nguoidung_diachi" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_diachi'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_diachi" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_diachi'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Đường dẫn ví Bitcoin:</label>
-                                                    <input name="nguoidung_btclink" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_btclink'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_btclink" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_btclink'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                             </div>
                                     </div>

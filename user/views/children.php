@@ -46,14 +46,16 @@
                                                 <th>NO</th>
                                                 <th>ACCOUNT</th>
                                                 <th>STATUS</th>
-                                                <th>CREATE DATE</th>
                                                 <th>BTC LINK</th>
+                                                <th>PARENT</th>
+                                                <th>TYPE LOCATION</th>
+                                                <th>BALANCING VALUE</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
                                             <?php if ($rowList == 0){?>
-                                                    <tr><td colspan="5" class="text-center">No item</td></tr>
+                                                    <tr><td colspan="8" class="text-center">No item</td></tr>
                                             <?php }else{?>
                                                 <?php $iSTT = 1;?>
                                                 <?php foreach ($arrChild as $user){?>
@@ -61,8 +63,10 @@
                                                     <td><?php echo $iSTT;?></td>
                                                     <td><?php echo $user['nguoidung_taikhoan'];?></td>
                                                     <td><span class="label text-uppercase <?php echo $user['nguoidung_trangthaihoatdong'];?>"><?php echo $user['nguoidung_trangthaihoatdong'];?></span></td>
-                                                    <td><?php echo $user['nguoidung_ngaytao'];?></td>
                                                     <td><?php echo $user['nguoidung_btclink'];?></td>
+                                                    <td><?php $parent = userDetail($user['nguoidung_parent_id']); echo $parent['nguoidung_taikhoan'];?></td>
+                                                    <td><?php echo $user['nguoidung_loainhanh'];?></td>
+                                                    <td><?php echo $user['nguoidung_giatricanbang'];?></td>
                                                     <?php $iSTT++;?>
                                                 </tr>
                                                 <?php }?>

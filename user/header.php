@@ -38,15 +38,20 @@
     <script src="../js/bootbox.js"></script>
     <script src="../js/crud.js"></script> <!-- Them vao ngay 21/10/2016 Ut -->
     
+    <!-- Core for autocomplete -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> <!-- Add by ThangTGM 04/11/2016-->
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> <!-- Add by ThangTGM 04/11/2016-->
+    
     <!-- Plugin for datatable-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="../js/dataTables.bootstrap.js"></script>
 </head>
 <?php 
+    session_start();
     require('../../config.php');
     require('../models/user.php');
-    require('../models/session.php');
+    // require('../models/session.php');
     if(isset($_SESSION['user_role'])){
         if($_SESSION['user_role'] != "normal"){
             // header("location: ../../index.php");
@@ -85,7 +90,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userDetail['nguoidung_hoten'];?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="info.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li class="divider"></li>
                         <li>

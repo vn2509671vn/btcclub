@@ -43,7 +43,7 @@
             $isTrupin = trupin($id, $sopin, $sopindadung, $status);
             $isLichSu = taolichsupin($id, 'PD', -1, 'Used PIN for PD['.$mapd.']');
             $isTaolenh = taolenhpd($id,$mapd);
-            if($isTrupin && $isTaolenh && $isLichSu){
+            if($isTrupin && $isLichSu && $isTaolenh){
                 echo 1;
             }
             else {

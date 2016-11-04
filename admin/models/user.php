@@ -1,5 +1,6 @@
 <?php 
     require("../../user/models/pd-gd.php");
+    
     function getVirtualUserNotBusy(){
         $query = "select * from nguoidung where nguoidung_hethong = 1 and nguoidung_quyen = 'normal' and nguoidung_id NOT IN (select gd_nguoidung_id from gd where gd_status IN ('waiting','matched'))";
         return mysql_query($query);

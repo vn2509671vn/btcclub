@@ -9,7 +9,7 @@
         return mysql_query($query);
     }
     function trupin($nguoidung_id, $sopin, $sopindadung, $status){
-        $query = "update nguoidung set nguoidung_sopin = $sopin, nguoidung_trangthaikichhoat = '$status', nguoidung_sopindadung = $sopindadung where nguoidung_id = $nguoidung_id";
+        $query = "update nguoidung set nguoidung_sopin = $sopin, nguoidung_trangthaikichhoat = '$status', nguoidung_sopindadung = $sopindadung, nguoidung_dakichpd1 = 1 where nguoidung_id = $nguoidung_id";
         return mysql_query($query);
     }
     

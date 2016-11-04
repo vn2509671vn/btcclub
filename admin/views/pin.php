@@ -157,7 +157,7 @@
             var mk = $('#nguoidung_matkhaugd').val();
             var mk_nguoichuyen = '<?php echo $status['nguoidung_matkhaugd']; ?>';
             var sopin_chuyen = '<?php echo $status["nguoidung_sopin"]; ?>';
-            if(amount < sopin_chuyen){
+            if(parseInt(amount) < parseInt(sopin_chuyen)){
                 $.ajax({
                     url:"../models/transfer_pin.php", 
                     method:"post",  
@@ -184,6 +184,7 @@
                         }
                     }
                 }).done(function(){
+                    
                           $.ajax({
                                 url:"../models/pd_new.php", 
                                 method:"post",  

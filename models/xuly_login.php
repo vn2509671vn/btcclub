@@ -31,11 +31,11 @@ if (isset($_POST['submit'])) {
                 $_SESSION['user_role']=$listuser['nguoidung_quyen'];
                 if($_SESSION['user_role'] == 'admin'){
                     // header("location: admin/index.php"); // Redirecting To Admin page
-                    echo "<script>window.location.replace('admin/index.php')</script>";
+                    echo "<script>window.location.replace('admin/views/index.php')</script>";
                 }
                 else {
                     // header("location: user/index.php"); // Redirecting To Admin page
-                    echo "<script>window.location.replace('user/index.php')</script>";
+                    echo "<script>window.location.replace('user/views/index.php')</script>";
                 }
             }
         } else {

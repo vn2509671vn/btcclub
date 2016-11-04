@@ -77,9 +77,6 @@
         return mysql_query($query);
     }
     function pathparent($source, $parent, &$newString){
-        if( mysql_num_rows(getparent($parent)) != 3){
-    	        $newString .= $parent . ',';
-    	    }
     	if(count($source) > 0) {
     		foreach ($source as $key => $value){
     		    if( mysql_num_rows(getparent($source[$key]['nguoidung_id'])) != 3){

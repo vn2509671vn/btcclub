@@ -12,7 +12,7 @@
       <section class="login-form">
         <form method="post" action="#" role="login">
           <img src="img/logo.png" class="img-responsive"width="200" alt="" />
-          <input type="input" name="username"  required class="form-control input-lg" placeholder="btc12323" />
+          <input type="input" name="username"  required class="form-control input-lg" placeholder="Please input account" />
           <input type="password" class="form-control input-lg" placeholder="**********" id="password" name="password" placeholder="Password" required="" />
           <div class="pwstrength_viewport_progress"></div>
           <?php if($error == 1){ ?>

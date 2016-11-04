@@ -4,8 +4,7 @@
 <!-- Add start Models-->
 <?php 
     require("../models/member_f1.php");
-    $array_id = mysql_fetch_array(getid($user_check));
-    $id = $array_id[0];
+    $id = $_SESSION['login_id'];
     $user = danhsach();
     $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
@@ -83,7 +82,7 @@
                                                                 $ds_nhanh_parent = sttaccount($id); ?>
                                                         ?> 
                                                                 <option value="<?php echo $ds_nhanh_parent['nguoidung_id']; ?>">
-                                                                    <?php echo $ds_nhanh_parent['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh_parent['nguoidung_loainhanh'] .')'; ?>
+                                                                    <?php echo $ds_nhanh_parent['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh_parent['nguoidung_hoten'] .' )'; ?>
                                                                 </option>
                                                         <?php  
                                                             }
@@ -93,7 +92,7 @@
                                                                 $tem = mysql_num_rows($k);
                                                                 if($tem < 2){
                                                                     $ds_nhanh = sttaccount(intval($dem)); ?>
-                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_loainhanh'] .')'; ?></option>
+                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_hoten'] .' )'; ?></option>
                                                                 <?php }
                                                                     // else{
                                                                     //     echo '';

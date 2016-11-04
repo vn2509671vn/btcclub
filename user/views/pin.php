@@ -156,7 +156,8 @@
             var mk = $('#nguoidung_matkhaugd').val();
             var mk_nguoichuyen = '<?php echo $status['nguoidung_matkhaugd']; ?>';
             var sopin_chuyen = '<?php echo $status["nguoidung_sopin"]; ?>';
-            if(amount < sopin_chuyen){
+            var isAutoPD = false;
+            if(parseInt(amount) < parseInt(sopin_chuyen)){
                 $.ajax({
                     url:"../models/transfer_pin.php", 
                     method:"post",  
@@ -174,6 +175,7 @@
                     {
                         if(data == 1){
                             alert("Giao dich pin thanh cong");
+                            isAutoPD = true;
                         }
                         else if(data == 0){
                             alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
@@ -183,7 +185,8 @@
                         }
                     }
                 }).done(function(){
-                          $.ajax({
+                        if(isAutoPD){
+                            $.ajax({
                                 url:"../models/pd_new.php", 
                                 method:"post",  
                                 data:{
@@ -199,6 +202,7 @@
                                     }
                                 }  
                             });
+                        }
                     });
                 }
                 else{

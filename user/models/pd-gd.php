@@ -106,7 +106,7 @@
     }
     
     function existPDTransfer($pdid){
-        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_pd_status = 'waiting'";
+        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_gd_status NOT IN ('confirmed')";
         return mysql_query($query);
     }
     
@@ -126,7 +126,7 @@
     }
     
     function existGDTransfer($gdid){
-        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_gd_status = 'waiting'";
+        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_pd_status NOT IN ('transfered')";
         return mysql_query($query);
     }
     
@@ -319,108 +319,123 @@
             $gdDetail = getDetailGD($gdid);
             $transfer = doGDAction($gdid, $pdid, $action);
             
+            $transferFinish = finishTransfer($transferid);
+            $existPDTransfer = existPDTransfer($pdid);
+            $existPD = existPD($pdid);
+            $existGDTransfer = existGDTransfer($gdid);
+            
             /*Execute for GD to PD*/
-            if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1 && $gdDetail['gd_mathuong'] != 1){
-                $mapd = 'PD'.$userGD['nguoidung_id'].date("YmdHs");
-                $pin = $userGD['nguoidung_sopin'] - 1;
-                $pinused = $userGD['nguoidung_sopindadung'] + 1;
-                $isPD = createPD($userGD['nguoidung_id'], $mapd);
-                $isMinusPin = minusPin($userGD['nguoidung_id'], $pin, $pinused);
-                $isCreateHisPin = createHisPin($userGD['nguoidung_id'], 'PD', -1, 'Used PIN for PD['.$mapd.']');
-                if($isPD && $isMinusPin && $isCreateHisPin){
+            if(mysql_num_rows($existGDTransfer) == 0){
+                if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1 && $gdDetail['gd_mathuong'] != 1){
+                    $mapd = 'PD'.$userGD['nguoidung_id'].date("YmdHs");
+                    $pin = $userGD['nguoidung_sopin'] - 1;
+                    $pinused = $userGD['nguoidung_sopindadung'] + 1;
+                    $isPD = createPD($userGD['nguoidung_id'], $mapd);
+                    $isMinusPin = minusPin($userGD['nguoidung_id'], $pin, $pinused);
+                    $isCreateHisPin = createHisPin($userGD['nguoidung_id'], 'PD', -1, 'Used PIN for PD['.$mapd.']');
+                    if($isPD && $isMinusPin && $isCreateHisPin){
+                        $okGD = true;
+                    }
+                }
+                else {
                     $okGD = true;
                 }
-            }
-            else {
-                $okGD = true;
+                $gdFinish = finishGD($gdid);
             }
             
+            
             /*Execute for PD to GD*/
-            if($userPD['nguoidung_sopindadung'] <= 1){
-                if($userPD['nguoidung_sopin'] > 0){
-                    $mapd = 'PD'.$userPD['nguoidung_id'].date("YmdHs");
-                    $pin = $userPD['nguoidung_sopin'] - 1;
-                    $pinused = $userPD['nguoidung_sopindadung'] + 1;
-                    $isPD = createPD($userPD['nguoidung_id'], $mapd);
-                    $isMinusPin = minusPin($userPD['nguoidung_id'], $pin, $pinused);
-                    $isCreateHisPin = createHisPin($userPD['nguoidung_id'], 'PD', -1, 'Used PIN for PD['.$mapd.']');
-                    
-                    if($isPD && $isMinusPin && $isCreateHisPin){
+            if(mysql_num_rows($existPDTransfer) == 0 && mysql_num_rows($existPD) == 0){
+                if($userPD['nguoidung_sopindadung'] <= 1){
+                    if($userPD['nguoidung_sopin'] > 0){
+                        $mapd = 'PD'.$userPD['nguoidung_id'].date("YmdHs");
+                        $pin = $userPD['nguoidung_sopin'] - 1;
+                        $pinused = $userPD['nguoidung_sopindadung'] + 1;
+                        $isPD = createPD($userPD['nguoidung_id'], $mapd);
+                        $isMinusPin = minusPin($userPD['nguoidung_id'], $pin, $pinused);
+                        $isCreateHisPin = createHisPin($userPD['nguoidung_id'], 'PD', -1, 'Used PIN for PD['.$mapd.']');
+                        
+                        if($isPD && $isMinusPin && $isCreateHisPin){
+                            $okPD = true;
+                        }
+                    }
+                    else {
+                        updateTimePD($userPD['nguoidung_id']);
                         $okPD = true;
                     }
                 }
                 else {
-                    updateTimePD($userPD['nguoidung_id']);
-                    $okPD = true;
+                    $rWallet = $userPD['nguoidung_sotiennhan'] + 150;
+                    $addWallet = addRWallet($userPD['nguoidung_id'], $rWallet);
+                    if($addWallet){
+                        $okPD = true;
+                    }
                 }
+                $pdFinish = finishPD($pdid);
             }
-            else {
-                $rWallet = $userPD['nguoidung_sotiennhan'] + 150;
-                $addWallet = addRWallet($userPD['nguoidung_id'], $rWallet);
-                if($addWallet){
-                    $okPD = true;
-                }
-            }
+            
             
             /*Finish for pd-gd*/
-            if($okGD && $okPD){
-                $transferFinish = finishTransfer($transferid);
-                $existPDTransfer = existPDTransfer($pdid);
-                $existPD = existPD($pdid);
-                $existGDTransfer = existGDTransfer($gdid);
-                if(mysql_num_rows($existPDTransfer) == 0 && mysql_num_rows($existPD) == 0){
-                    $pdFinish = finishPD($pdid);
-                }
+            // if($okGD && $okPD){
+            //     $transferFinish = finishTransfer($transferid);
+            //     $existPDTransfer = existPDTransfer($pdid);
+            //     $existPD = existPD($pdid);
+            //     $existGDTransfer = existGDTransfer($gdid);
+            //     if(mysql_num_rows($existPDTransfer) == 0 && mysql_num_rows($existPD) == 0){
+            //         $pdFinish = finishPD($pdid);
+            //     }
                 
-                if(mysql_num_rows($existGDTransfer) == 0){
-                    $gdFinish = finishGD($gdid);
-                }
-            }
+            //     if(mysql_num_rows($existGDTransfer) == 0){
+            //         $gdFinish = finishGD($gdid);
+            //     }
+            // }
             
             /*Add Commission*/
-            if($userPD['nguoidung_sopindadung'] == 1){
-                /*Add commission for recommender*/
-                $recommenderID = $userPD['nguoidung_gioithieu'];
-                $recommender = getUserByID($recommenderID);
-                if($recommender['nguoidung_sopindadung'] > 1){
-                    $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
-                    $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
-                    if($updateRecommenderCommission){
-                        addHistoryCommission($recommenderID, $recommenderCommission, 'Hoa hồng trực tiếp');
-                    }
-                }
-                
-                /*Add commission for weak team*/
-                $arrParent = array();
-                $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
-                foreach ($arrParent as $parentId) {
-                    $root = getUserByID($parentId);
-                    if($root['nguoidung_sopindadung'] <= 1){
-                        continue;
-                    }
-                    $nodeL = getLeftNode($parentId);
-                    $nodeR = getRightNode($parentId);
-                    $totalL = 0;
-                    $totalR = 0;
-                    $tiencanbang = 0;
-                    $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
-                    $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
-                    if($nodeL['nguoidung_sopindadung'] >= 1){
-                        $totalL += 100;
+            if($pdFinish){
+                if($userPD['nguoidung_sopindadung'] == 1){
+                    /*Add commission for recommender*/
+                    $recommenderID = $userPD['nguoidung_gioithieu'];
+                    $recommender = getUserByID($recommenderID);
+                    if($recommender['nguoidung_sopindadung'] > 1){
+                        $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
+                        $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
+                        if($updateRecommenderCommission){
+                            addHistoryCommission($recommenderID, $recommenderCommission, 'Hoa hồng trực tiếp');
+                        }
                     }
                     
-                    if($nodeR['nguoidung_sopindadung'] >= 1){
-                        $totalR += 100;
-                    }
-                    
-                    $tiencanbang = min($totalL,$totalR);
-                    $giatricanbang = $root['nguoidung_giatricanbang'];
-                    if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
-                        $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*$root['nguoidung_phantramhoahong'];
-                        $giatricanbang = $tiencanbang;
-                        $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
-                        if($updateCommission){
-                            addHistoryCommission($root['nguoidung_id'], $hoahong, 'Hoa hồng nhánh yếu');
+                    /*Add commission for weak team*/
+                    $arrParent = array();
+                    $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
+                    foreach ($arrParent as $parentId) {
+                        $root = getUserByID($parentId);
+                        if($root['nguoidung_sopindadung'] <= 1){
+                            continue;
+                        }
+                        $nodeL = getLeftNode($parentId);
+                        $nodeR = getRightNode($parentId);
+                        $totalL = 0;
+                        $totalR = 0;
+                        $tiencanbang = 0;
+                        $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
+                        $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
+                        if($nodeL['nguoidung_sopindadung'] >= 1){
+                            $totalL += 100;
+                        }
+                        
+                        if($nodeR['nguoidung_sopindadung'] >= 1){
+                            $totalR += 100;
+                        }
+                        
+                        $tiencanbang = min($totalL,$totalR);
+                        $giatricanbang = $root['nguoidung_giatricanbang'];
+                        if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
+                            $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*$root['nguoidung_phantramhoahong'];
+                            $giatricanbang = $tiencanbang;
+                            $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
+                            if($updateCommission){
+                                addHistoryCommission($root['nguoidung_id'], $hoahong, 'Hoa hồng nhánh yếu');
+                            }
                         }
                     }
                 }

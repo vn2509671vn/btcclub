@@ -4,8 +4,7 @@
 <!-- Add start Models-->
 <?php 
     require("../models/member_f1.php");
-    $array_id = mysql_fetch_array(getid($user_check));
-    $id = $array_id[0];
+    $id = $_SESSION['login_id'];
     $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
     $lstStatus = $status[0];
@@ -78,11 +77,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Số điện thoại:</label>
-                                                    <input name="nguoidung_sdt" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_sdt" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>CMND:</label>
-                                                    <input name="nguoidung_sdt" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_sdt'];  ?>" <?php if($status['nguoidung_cmnd'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_cmnd" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_cmnd'];  ?>" <?php if($status['nguoidung_cmnd'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email:</label>

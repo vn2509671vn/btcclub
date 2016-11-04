@@ -69,6 +69,7 @@ $(document).ready(function(){
                                             '<strong>Thông báo: </strong>' + 
                                             '<div>' + data+ '</div>' + '</div>');
 			     $("#emp-UpdateForm")[0].reset();
+			     window.location.reload();
 		     });	
 		});   
 	    return false;

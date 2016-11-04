@@ -125,7 +125,7 @@ if ($_POST) {
             }
         }
         else{
-            echo "Tài Khoản đã được tạo";
+            echo "Tài Khoản đã tồn tại. Vui lòng tạo tài khoản khác.!!!!";
         }
         
 
