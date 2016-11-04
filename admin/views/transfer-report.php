@@ -53,9 +53,9 @@
                                                 <tr>
                                                     <td><?php echo $iSTT;?></td>
                                                     <td><?php echo $detailTransfer['transfer_ngaytao'];?></td>
-                                                    <td><?php echo $detailTransfer['transfer_pd_status'];?></td>
-                                                    <td><?php echo $detailTransfer['transfer_gd_status'];?></td>
-                                                    <td><?php echo $detailTransfer['transfer_status'];?></td>
+                                                    <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_pd_status'];?>"><?php echo $detailTransfer['transfer_pd_status'];?></span></td>
+                                                    <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_gd_status'];?>"><?php echo $detailTransfer['transfer_gd_status'];?></span></td>
+                                                    <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_status'];?>"><?php echo $detailTransfer['transfer_status'];?></span></td>
                                                     <td><?php echo $detailTransfer['transfer_time_remain'];?></td>
                                                     <td><button type="button" class="btn btn-info btn-sm" onclick="
                                                     proceed(

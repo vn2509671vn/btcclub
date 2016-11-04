@@ -47,10 +47,16 @@
     require('../../config.php');
     require('../models/user.php');
     require('../models/session.php');
-    if($_SESSION['user_role'] != "normal"){
-        // header("location: ../../index.php");
+    if(isset($_SESSION['user_role'])){
+        if($_SESSION['user_role'] != "normal"){
+            // header("location: ../../index.php");
+            echo "<script>window.location.replace('../../index.php')</script>";
+        }
+    }
+    else {
         echo "<script>window.location.replace('../../index.php')</script>";
     }
+    
     $id = $_SESSION['login_id'];
     $userDetail = userDetail($id);
 ?>
@@ -108,6 +114,9 @@
                     </li>
                     <li id="member_f1">
                         <a href="member_f1.php"><i class="fa fa-fw fa-users"></i> Quản lý F1</a>
+                    </li>
+                    <li id="children">
+                        <a href="children.php"><i class="fa fa-fw fa-users"></i> Quản lý thành viên</a>
                     </li>
                     <li id="thanhvien_pd">
                         <a href="thanhvien_pd.php"><i class="fa fa-fw fa-plus-square"></i> Quản lí PD nhanh dưới</a>

@@ -53,6 +53,10 @@ a.title-post:focus {
     background-color: #337ab7;
 }
 
-.report{
+.report, .banned, .frozen{
     background-color: red;
+}
+
+.normal{
+    background-color: #8bc34a;
 }
