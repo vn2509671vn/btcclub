@@ -4,8 +4,8 @@
         $query = "select pd.pd_id, pd.pd_mapd, pd.pd_ngaytao, pd.pd_filled, pd.pd_maxprofit, pd.pd_status, nguoidung.nguoidung_taikhoan as 'taikhoan' from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and pd.pd_nguoidung_id = $nguoidung_id";
         return mysql_query($query);
     }
-    function thongtin($id){
-        $query = "select * from nguoidung where nguoidung_id=" .$id;
+    function thongtin($userName){
+        $query = "select * from nguoidung where nguoidung_taikhoan = '$userName'";
         return mysql_query($query);
     }
     function trupin($nguoidung_id, $sopin, $sopindadung, $status){
@@ -30,8 +30,9 @@
     }
     
     if(isset($_POST['action'])){
-        $id = $_POST['id'];
-        $lstthongtin = mysql_fetch_array(thongtin($id));
+        $userName = $_POST['gioithieu'];
+        $lstthongtin = mysql_fetch_array(thongtin($userName));
+        $userID = $lstthongtin['nguoidung_id'];
         $sopin = $lstthongtin['nguoidung_sopin'];
         $sopin -= 1; 
         $sopindadung = $lstthongtin['nguoidung_sopindadung'];
@@ -40,9 +41,9 @@
         $status = $lstthongtin['nguoidung_trangthaikichhoat'];
         if($status == 'new'){
             $status = 'old';
-            $isTrupin = trupin($id, $sopin, $sopindadung, $status);
-            $isLichSu = taolichsupin($id, 'PD', -1, 'Used PIN for PD['.$mapd.']');
-            $isTaolenh = taolenhpd($id,$mapd);
+            $isTrupin = trupin($userID, $sopin, $sopindadung, $status);
+            $isLichSu = taolichsupin($userID, 'PD', -1, 'Used PIN for PD['.$mapd.']');
+            $isTaolenh = taolenhpd($userID,$mapd);
             if($isTrupin && $isTaolenh && $isLichSu){
                 echo 1;
             }

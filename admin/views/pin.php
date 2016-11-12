@@ -6,12 +6,45 @@
 <!-- Add end Header-->
 <!-- Add start Models-->
 <?php 
+    class userInfo
+    {
+        public $label;
+        public $value;
+        public $id;
+    }
+    
     require("../models/member_f1.php");
-    $array_id = mysql_fetch_array(getid($user_check));
-    $id = $array_id[0];
+    $id = $_SESSION['login_id'];
     $status = sttaccount($id);
     $lstStatus = $status[0];
     $user  = danhsach();
+    
+    // Data for autocomplete
+    $new_array = array();
+    $dataAutocomplete = array();
+    $classUser = new userInfo();
+    while ($row = mysql_fetch_array($user)) 
+        {
+            $new_array[$row['nguoidung_id']]['nguoidung_id'] = $row['nguoidung_id'];
+            $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
+            $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
+        }
+    
+    $newString = nhanhcon($new_array, $id, $newString);
+    $newString = trim($newString);
+    $ds = explode(',',$newString);
+    
+    for($i=0; $i < count($ds)-1;$i++){
+        $tmpUser = new userInfo();
+        $dem = $ds[$i];
+        $k = getparent(intval($dem));
+        $tem = mysql_num_rows($k);
+        $ds_nhanh = sttaccount(intval($dem));
+        $tmpUser->id = $ds_nhanh['nguoidung_id'];
+        $tmpUser->value = $ds_nhanh['nguoidung_taikhoan'];
+        $tmpUser->label = $ds_nhanh['nguoidung_taikhoan'];
+        array_push($dataAutocomplete,$tmpUser);
+    }
 ?>
 <!-- Add end models -->
 <!-- Add end Header-->
@@ -55,29 +88,7 @@
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Dưới nhánh:</label>
-                                                    <!--<input type="text" name="currency" class="form-control" id="autocomplete" placeholder="Nhập tên phòng">-->
-                                                    <!--<div style="clear:both;"></div>-->
-                                                    <select name="nguoidung_parent_id" id="nguoidung_parent_id" class="form-control">
-                                                        <?php
-                                                            $new_array = array();
-                                                            while ($row = mysql_fetch_array($user)) 
-                                                                {
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_id'] = $row['nguoidung_id'];
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
-                                                                }
-                                                            $newString = nhanhcon($new_array, $id, $newString);
-                                                            $newString = trim($newString);
-                                                            $ds = explode(',',$newString);
-                                                            for($i=0; $i < count($ds)-1;$i++){
-                                                                $dem = $ds[$i];
-                                                                $k = getparent(intval($dem));
-                                                                $tem = mysql_num_rows($k);
-                                                                    $ds_nhanh = sttaccount(intval($dem)); ?>
-                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_hoten'] .')'; ?></option>
-                                                                <?php }
-                                                                ?>
-                                                    </select>
+                                                    <input type="text" class="form-control" name="nguoidung_parent_id" id="nguoidung_parent_id" required placeholder="Nhập tài khoản cần gắn">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Số Pin:</label>
@@ -125,6 +136,14 @@
 
 </html>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var srcData = <?php echo json_encode($dataAutocomplete);?>;
+        var managementID;
+        $('#nguoidung_parent_id').autocomplete({
+            source: srcData
+        });
+    })
+    
     selectorMenu("pin");
     var status =$('#status').val();
     
@@ -155,7 +174,6 @@
             var gioithieu = $('#nguoidung_parent_id').val();
             var noidung = $('#pin_user_description').val();
             var mk = $('#nguoidung_matkhaugd').val();
-            var mk_nguoichuyen = '<?php echo $status['nguoidung_matkhaugd']; ?>';
             var sopin_chuyen = '<?php echo $status["nguoidung_sopin"]; ?>';
             if(parseInt(amount) < parseInt(sopin_chuyen)){
                 $.ajax({
@@ -180,7 +198,7 @@
                             alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
                         }
                         else{
-                            alert("Giao dich khong thanh cong");
+                            alert("Người nhận không tồn tại");
                         }
                     }
                 }).done(function(){
@@ -190,7 +208,7 @@
                                 method:"post",  
                                 data:{
                                     action: 'create',
-                                    id: gioithieu,
+                                    gioithieu: gioithieu,
                                     mapd: 'PD<?php echo $status['nguoidung_parent_id'].date("YmdHs");?>'
                                 },  
                                 dataType:"text",  

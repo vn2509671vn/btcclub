@@ -7,6 +7,8 @@ require("../../config.php");
         date_default_timezone_set('Asia/Bangkok');
         $datetime = new DateTime();
         $curDate = $datetime->format('Y-m-d H:i:s');
+        $datetimeKichPD = $datetime->modify('+2 day');
+        $datetimeKichPD = $datetimeKichPD->format('Y-m-d H:i:s');
         $query = "INSERT INTO nguoidung(nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd, nguoidung_hoten
 		, nguoidung_sdt, nguoidung_cmnd, nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu
 		, nguoidung_parent_id, nguoidung_loainhanh, nguoidung_giatricanbang, nguoidung_phantramhoahong, nguoidung_trangthaikichhoat
@@ -15,7 +17,7 @@ require("../../config.php");
 		, nguoidung_magioithieu, nguoidung_danhanthuong)
 	VALUES ('$nguoidung_taikhoan','$nguoidung_matkhaudn','$nguoidung_matkhaugd','$nguoidung_hoten','$nguoidung_sdt','$nguoidung_cmnd','$nguoidung_mail','$nguoidung_diachi'
 		,'$nguoidung_btclink',$nguoidung_gioithieu,$nguoidung_parent_id,'$nguoidung_loainhanh'
-		,0,0,'new','0000-00-00 00:00:00',0,'normal','normal','$curDate',1,'j0',0,0,0,0,0,'',0)";
+		,0,0,'new','$datetimeKichPD',0,'normal','normal','$curDate',1,'j0',0,0,0,0,0,'',0)";
         return mysql_query($query);
     }
     function checkCapbac($id){

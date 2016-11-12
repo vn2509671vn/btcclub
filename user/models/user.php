@@ -18,7 +18,7 @@
     }
     
     function getF1($userID){
-        $query = "select * from nguoidung where nguoidung_gioithieu = $userID";
+        $query = "select * from nguoidung where nguoidung_gioithieu = $userID and nguoidung_sopindadung > 1";
         return mysql_query($query);
     }
     
