@@ -4,7 +4,6 @@
 <!-- Add start Models-->
 <?php require("../models/pd.php");
 require("../models/pd-gd.php");
-session_start();
     $pdid = $_GET['id']; // Get from url
     $userID = $_SESSION['login_id'];
     $getTransfer = dspdkhoplenh($pdid, $userID);

@@ -1,11 +1,11 @@
 <?php
-    //include('../models/session.php');
+    include('../models/session.php');
 ?>
 <!-- Add start nag-->
-<?php require("../nag.php");?>
-<?php require("../models/homepage.php");?>
+<?php   require("../nag.php");
+        require("../models/mailbox.php");
+?>
 <?php 
-    session_start();
     if(!isset($_SESSION['user_role'])){
         echo "<script>window.location.replace('../../index.php')</script>";
     }
@@ -15,7 +15,8 @@
     }
     
     $id = $_SESSION['login_id'];
-    $userDetail = getInfoUser($id);
+    $listInbox = getCountInbox($id);
+    $numInbox = mysql_num_rows($listInbox);
 ?>
 <!-- Add end nag-->
 
@@ -35,8 +36,11 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
+                <li>
+                    <a href="inbox.php"><i class="fa fa-envelope"></i><span class="badge badge-warning"><?php echo $numInbox;?></span></a>
+                </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userDetail['nguoidung_taikhoan']; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user_check; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="info.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -78,6 +82,9 @@
                     <li id="member">
                         <a href="member.php"><i class="fa fa-fw fa-user"></i> Quản lý thành viên</a>
                     </li>
+                    <li id="cayf1">
+                        <a href="cayf1.php"><i class="fa fa-fw fa-user"></i> Quản lý Cây thành viên</a>
+                    </li>
                     <li id="transfer-report">
                         <a href="transfer-report.php"><i class="fa fa-fw fa-users"></i> Quản lý giao dịch</a>
                     </li>
@@ -100,6 +107,20 @@
                     </li>
                     <li id="gd_report">
                         <a href="gd_report.php"><i class="fa fa-fw fa-user"></i> Danh sách thành viên GD Report</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#mailbox"><i class="fa fa-fw fa-inbox"></i> Mail <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="mailbox" class="collapse">
+                            <li id="compose">
+                                <a href="compose.php">Soạn thư</a>
+                            </li>
+                            <li id="inbox">
+                                <a href="inbox.php">Hộp thư đến</a>
+                            </li>
+                            <li id="sent">
+                                <a href="sent.php">Hộp thư đã gửi</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#thongtin"><i class="fa fa-fw fa-user"></i> Thông tin cá nhân <i class="fa fa-fw fa-caret-down"></i></a>

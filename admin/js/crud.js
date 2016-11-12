@@ -5,7 +5,7 @@ $(document).ready(function(){
 	/* Data Insert Starts Here */
 	$(document).on('submit', '#emp-SaveForm', function() {
 	  
-	   $.post("../models/register.php", $(this).serialize())
+	   $.post("../models/register.php", $(this).serializeArray())
         .done(function(data){
 			$("#dis").fadeOut();
 			$("#dis").fadeIn('slow', function(){
@@ -14,6 +14,7 @@ $(document).ready(function(){
                                             '<strong>Thông báo: </strong>' + 
                                             '<div>' + data+ '</div>' + '</div>');
 			     $("#emp-SaveForm")[0].reset();
+			     window.location.reload();
 		     });	
 		 });   
 	     return false;

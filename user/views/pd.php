@@ -4,7 +4,6 @@
 <!-- Add start Models-->
 <?php require("../models/pd.php");
 require("../models/pd-gd.php");
-session_start();
     $id = $_SESSION['login_id'];
     $getPD = danhsachpd($id);
     $isPD = isEnableProvide($id);

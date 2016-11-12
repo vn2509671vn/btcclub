@@ -21,6 +21,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="../css/folder_style.css"><!-- Them vao ngay 21/10/2016 Ut -->
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="img/logo.png" rel="shortcut icon" type="image/x-icon" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

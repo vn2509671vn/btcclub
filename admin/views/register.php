@@ -2,13 +2,56 @@
 <?php require("../header.php");?>
 <!-- Add end Header-->
 <!-- Add start Models-->
-<?php 
+<?php
+    class userInfo
+    {
+        public $label;
+        public $value;
+        public $id;
+    }
+    
     require("../models/member_f1.php");
     $id = $_SESSION['login_id'];
     $user = danhsach();
-    $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
     $lstStatus = $status[0];
+    
+    $new_array = array();
+    $dataAutocomplete = array();
+    $classUser = new userInfo();
+    while ($row = mysql_fetch_array($user)) 
+        {
+            $new_array[$row['nguoidung_id']]['nguoidung_id'] = $row['nguoidung_id'];
+            $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
+            $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
+        }
+    $newString = pathparent($new_array, $id, $newString);
+    $newString = str_replace('<ul></ul>', '', $newString);
+    $newString = trim($newString);
+    $ds = explode(',',$newString);
+    $parent = getparent($id);
+    $numparent = mysql_num_rows($parent);
+    if($numparent != 2 ){
+        $ds_nhanh_parent = sttaccount($id);
+        $classUser->id = $ds_nhanh_parent['nguoidung_id'];
+        $classUser->value = $ds_nhanh_parent['nguoidung_taikhoan'];
+        $classUser->label = $ds_nhanh_parent['nguoidung_taikhoan'];
+        array_push($dataAutocomplete,$classUser);
+    }
+                                                                    
+    for($i=0; $i < count($ds)-1;$i++){
+        $tmpUser = new userInfo();
+        $dem = $ds[$i];
+        $k = getparent(intval($dem));
+        $tem = mysql_num_rows($k);
+        if($tem < 2){
+            $ds_nhanh = sttaccount(intval($dem));
+            $tmpUser->id = $ds_nhanh['nguoidung_id'];
+            $tmpUser->value = $ds_nhanh['nguoidung_taikhoan'];
+            $tmpUser->label = $ds_nhanh['nguoidung_taikhoan'];
+            array_push($dataAutocomplete,$tmpUser);
+        }
+    }
 ?>
 <!-- Add end models -->
 <!-- Add end Header-->
@@ -59,48 +102,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>ID Quản lí:</label>
-                                                    <!--<input type="text" name="currency" class="form-control" id="autocomplete" placeholder="Nhập tài khoản cần gắn">-->
-                                                    <!--<div style="clear:both;"></div>-->
-                                                    <!--<div id="grid-load"></div>-->
-                                                    <select name="nguoidung_parent_id"  class="form-control">
-                                                        <?php
-                                                            $new_array = array();
-                                                            while ($row = mysql_fetch_array($user)) 
-                                                                {
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_id'] = $row['nguoidung_id'];
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_taikhoan'] = $row['nguoidung_taikhoan'];
-                                                                    $new_array[$row['nguoidung_id']]['nguoidung_parent_id'] = $row['nguoidung_parent_id'];
-                                                                }
-                                                            $newString = pathparent($new_array, $id, $newString);
-                                                            $newString = str_replace('<ul></ul>', '', $newString);
-                                                            $newString = trim($newString);
-                                                            $ds = explode(',',$newString);
-                                                            $parent = getparent($id);
-                                                            // $lstparent = mysql_fetch_array($parent);
-                                                            $numparent = mysql_num_rows($parent);
-                                                            if($numparent != 2 ){
-                                                                $ds_nhanh_parent = sttaccount($id); ?>
-                                                        ?> 
-                                                                <option value="<?php echo $ds_nhanh_parent['nguoidung_id']; ?>">
-                                                                    <?php echo $ds_nhanh_parent['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh_parent['nguoidung_hoten'] .' )'; ?>
-                                                                </option>
-                                                        <?php  
-                                                            }
-                                                            for($i=0; $i < count($ds)-1;$i++){
-                                                                $dem = $ds[$i];
-                                                                $k = getparent(intval($dem));
-                                                                $tem = mysql_num_rows($k);
-                                                                if($tem < 2){
-                                                                    $ds_nhanh = sttaccount(intval($dem)); ?>
-                                                                    <option value="<?php echo $ds_nhanh['nguoidung_id']; ?>"><?php echo $ds_nhanh['nguoidung_taikhoan'] . ' ('. ' ' . $ds_nhanh['nguoidung_hoten'] .' )'; ?></option>
-                                                                <?php }
-                                                                    // else{
-                                                                    //     echo '';
-                                                                    // }
-                                                                }
-                                                                ?>   
-                                                       
-                                                    </select>
+                                                    <input type="text" class="form-control" id="autocomplete" placeholder="Nhập tài khoản cần gắn">
+                                                    <input type="hidden" name="nguoidung_parent_id" class="form-control" type="text">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Tài khoản:</label>
@@ -167,6 +170,18 @@
 
 </html>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var srcData = <?php echo json_encode($dataAutocomplete);?>;
+        var managementID;
+        $('#autocomplete').autocomplete({
+            source: srcData,
+            select: function(event, ui) {
+                managementID = ui.item.id;
+                $('input[name="nguoidung_parent_id"]').attr("value",managementID);
+            }
+        });
+    })
+    
     selectorMenu("register");
     var status =$('#status').val();
     window.onload = function()

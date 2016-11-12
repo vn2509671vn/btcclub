@@ -5,7 +5,6 @@
 <?php 
     require("../models/member_f1.php");
     $id = $_SESSION['login_id'];
-    $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
     $lstStatus = $status[0];
 ?>

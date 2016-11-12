@@ -117,7 +117,7 @@
                                         <i class="fa fa-users fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php echo $user['nguoidung_soluongthanhvien'];?></div>
+                                        <div class="huge"></div>
                                         <div>DOWNLINE TREE</div>
                                     </div>
                                 </div>

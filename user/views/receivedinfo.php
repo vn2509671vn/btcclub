@@ -3,7 +3,6 @@
 <!-- Add end Header-->
 <!-- Add start Models-->
 <?php
-session_start();
     $userid = $_GET['id']; // Get from url
     $amount = $_GET['amount'];
     $transferid = $_GET['transferid'];

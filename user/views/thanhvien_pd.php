@@ -25,7 +25,7 @@
                         <div class="page-content">
                             <ol class="breadcrumb">
                                 <li><a href="index.php"><i class="fa fa-fw fa-dashboard"></i>Bảng điều khiển</a></li>
-                                <li><a href="member_f1.php"><i class="fa fa-list"></i>Thành viên</a></li>
+                                <li><a href="children.php"><i class="fa fa-list"></i>Thành viên</a></li>
                                 <li class="active">Danh Sách PD tuyến dưới </li>
                             </ol>
                         </div>

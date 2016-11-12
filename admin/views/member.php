@@ -50,10 +50,13 @@
                                             <tr>
                                                 <th>NO</th>
                                                 <th>ID</th>
+                                                <th>Account</th>
                                                 <th>FULL NAME</th>
                                                 <th>EMAIL</th>
                                                 <th>PHONE</th>
                                                 <th>CẤP BẬT</th>
+                                                <th>PARENTS</th>
+                                                <th>NHÁNH</th>
                                                 <th>DATE CREATE</th>
                                                 <th>FREEZE</th>
                                                 <th>CLOCK</th>
@@ -68,11 +71,14 @@
                                                 <?php while($listUser = mysql_fetch_array($user)){?>
                                                 <tr>
                                                     <td><?php echo $iSTT;?></td>
+                                                    <td><?php echo $listUser['nguoidung_id'];?></td>
                                                     <td><?php echo $listUser['nguoidung_taikhoan'];?></td>
                                                     <td><?php echo $listUser['nguoidung_hoten'];?></td>
                                                     <td><?php echo $listUser['nguoidung_mail'];?></td>
                                                     <td><?php echo $listUser['nguoidung_sdt'];?></td>
-                                                    <td><?php echo $listUser['nguoidung_sdt'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_capbac'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_parent_id'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_loainhanh'];?></td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>
                                                     <input style="display:none" class="form-control" name="id" id="giatri<?php echo $listUser['nguoidung_id'] ?>" type="text" readonly value="<?php echo $listUser['nguoidung_trangthaihoatdong'];?>">
                                                     <td id="<?php echo $listUser['nguoidung_id']?>" class="ngung">

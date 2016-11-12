@@ -67,11 +67,11 @@ require("../../config.php");
 if ($_POST) {
     $nguoidung_taikhoan = $_POST['nguoidung_taikhoan'];
     $nguoidung_gioithieu = $_POST['nguoidung_gioithieu'];
-    $nguoidung_parent_id = $_POST['nguoidung_parent_id'];
+    $nguoidung_parent_id = intval($_POST['nguoidung_parent_id']);
     $nguoidung_matkhaudn = $_POST['nguoidung_matkhaudn'];
-        $nguoidung_matkhaudn = md5($nguoidung_matkhaudn);
+    $nguoidung_matkhaudn = md5($nguoidung_matkhaudn);
     $nguoidung_matkhaugd = $_POST['nguoidung_matkhaugd'];  
-        $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
+    $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
     $nguoidung_hoten = $_POST['nguoidung_hoten'];
     $nguoidung_sdt = $_POST['nguoidung_sdt'];
     $nguoidung_mail = $_POST['nguoidung_mail'];

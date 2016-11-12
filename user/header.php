@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title>Nguoi Dung BTC Club</title>
+<link href="../tree_images/logo.png" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
@@ -27,6 +28,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <!-- Css Free Member  06-11-2016 Út -->
+    <link rel="stylesheet" href="../tree_css/jquery.treeview.css" />
+    
     
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
@@ -46,12 +52,17 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script type="text/javascript" src="../js/dataTables.bootstrap.js"></script>
+    
+     <!-- jQuery Free Member 06-11-2016 Út -->
+	<script src="../tree_js/jquery.cookie.js"></script>
+	<script src="../tree_js/jquery.treeview.js"></script>
+	<script type="text/javascript" src="../tree_js/demo.js"></script>
+
 </head>
 <?php 
-    session_start();
     require('../../config.php');
     require('../models/user.php');
-    // require('../models/session.php');
+    require('../models/session.php');
     if(isset($_SESSION['user_role'])){
         if($_SESSION['user_role'] != "normal"){
             // header("location: ../../index.php");
@@ -64,6 +75,8 @@
     
     $id = $_SESSION['login_id'];
     $userDetail = userDetail($id);
+    $listInbox = getCountInbox($id);
+    $numInbox = mysql_num_rows($listInbox);
 ?>
 <body>
 
@@ -84,7 +97,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li>
-                    <a href="#"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <a href="inbox.php"><i class="fa fa-envelope"></i><span class="badge badge-warning"><?php echo $numInbox;?></span></a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userDetail['nguoidung_hoten'];?> <b class="caret"></b></a>
@@ -123,11 +136,28 @@
                     <li id="children">
                         <a href="children.php"><i class="fa fa-fw fa-users"></i> Quản lý thành viên</a>
                     </li>
+                    <li id="cayf1">
+                        <a href="cayf1.php"><i class="fa fa-fw fa-users"></i> Quản lý Cây thành viên</a>
+                    </li>
                     <li id="thanhvien_pd">
                         <a href="thanhvien_pd.php"><i class="fa fa-fw fa-plus-square"></i> Quản lí PD nhanh dưới</a>
                     </li>
                     <li id="thanhvien_gd">
                         <a href="thanhvien_gd.php"><i class="fa fa-fw fa-plus-square"></i> Quản lí GD nhanh dưới</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#mailbox"><i class="fa fa-fw fa-inbox"></i> Mail <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="mailbox" class="collapse">
+                            <li id="compose">
+                                <a href="compose.php">Soạn thư</a>
+                            </li>
+                            <li id="inbox">
+                                <a href="inbox.php">Hộp thư đến</a>
+                            </li>
+                            <li id="sent">
+                                <a href="sent.php">Hộp thư đã gửi</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#thongtin"><i class="fa fa-fw fa-user"></i> Thông tin cá nhân <i class="fa fa-fw fa-caret-down"></i></a>

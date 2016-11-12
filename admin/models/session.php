@@ -10,6 +10,6 @@ $row = mysql_fetch_array($ses_sql);
 $login_session =$row['nguoidung_taikhoan'];
 if(!isset($login_session)){
     // header('Location: ../views/login.php'); // Redirecting To Home Page
-    echo "<script>window.location.replace('../views/login.php')</script>";
+    echo "<script>window.location.replace('../../index.php')</script>";
 }
 ?>

@@ -5,7 +5,6 @@
 <?php 
     require("../models/member_f1.php");
     $id = $_SESSION['login_id'];
-    $lstidnhanh = getnhanh($id);
     $status = sttaccount($id);
     $lstStatus = $status[0];
 ?>
@@ -24,7 +23,7 @@
                         <div class="page-content">
                             <ol class="breadcrumb">
                                 <li><a href="index.php"><i class="fa fa-fw fa-dashboard"></i>Bảng điều khiển</a></li>
-                                <li><a href="member.php"><i class="fa fa-list"></i>Thành viên</a></li>
+                                <li><a href="children.php"><i class="fa fa-list"></i>Thành viên</a></li>
                                 <li class="active">Thông tin chi tiết</li>
                             </ol>
                         </div>
@@ -85,16 +84,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email:</label>
-                                                    <input name="nguoidung_mail" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_mail'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_mail" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_mail'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                     
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Địa chỉ:</label>
-                                                    <input name="nguoidung_diachi" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_diachi'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_diachi" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_diachi'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Đường dẫn ví Bitcoin:</label>
-                                                    <input name="nguoidung_btclink" class="form-control" name="nguoidung_hoten" id="disabledInput" type="text" value="<?php echo $status['nguoidung_btclink'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_btclink" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_btclink'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                             </div>
                                     </div>
