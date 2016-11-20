@@ -38,6 +38,11 @@
         return mysql_query($query);
     }
     
+    function getListF1($userID){
+        $query = "select * from nguoidung where nguoidung_gioithieu = $userID and nguoidung_sopindadung > 0";
+        return mysql_query($query);
+    }
+    
     if(isset($_POST['action'])){
         $action = $_POST['action'];
         if($action == 'create'){
@@ -53,19 +58,41 @@
             $test = $inputPass2 ."-". $getPass2['nguoidung_matkhaugd'];
             if($getPass2['nguoidung_matkhaugd'] == $inputPass2){
                 if($type == "rwallet"){
-                    $tongtiennhan -= $amount;
-                    $isRuttien = ruttien($id, $tongtiennhan, $tonghoahong);
+                    if($tongtiennhan  >= $amount){
+                        $tongtiennhan -= $amount;
+                        $isRuttien = ruttien($id, $tongtiennhan, $tonghoahong);
+                    }
+                    else {
+                        $isRuttien = false;
+                    }
                 }
                 else {
-                    $tonghoahong -= $amount;
-                    $isRuttien = ruttien($id, $tongtiennhan, $tonghoahong);
+                    if($tonghoahong >= $amount){
+                        $tonghoahong -= $amount;
+                        $isRuttien = ruttien($id, $tongtiennhan, $tonghoahong);
+                    }
+                    else {
+                        $isRuttien = false;
+                    }
                 }
-                $isTaolenh = taolenhgd($id, $magd, $amount);
+                
+                if($isRuttien){
+                    $isTaolenh = taolenhgd($id, $magd, $amount);
+                }
+                else {
+                    $isTaolenh = false;
+                }
+                
                 if($isRuttien && $isTaolenh){
                     echo 1;
                 }
                 else {
-                    echo 0;
+                    if(!$isRuttien){
+                        echo 3;
+                    }
+                    else {
+                        echo 0;
+                    }
                 }
             }
             else{
@@ -98,7 +125,7 @@
         }
         else if($action == 'cwallet'){
             $userID = $_POST['userID'];
-            $listF1 = getF1($userID);
+            $listF1 = getListF1($userID);
             $countF1 = mysql_num_rows($listF1);
             $output = "";
             $maxAmount = 0;

@@ -75,8 +75,10 @@ if ($_POST) {
         return;
     }
     $nguoidung_matkhaudn = $_POST['nguoidung_matkhaudn'];
+    $nguoidung_matkhaudn = trim($nguoidung_matkhaudn);
     $nguoidung_matkhaudn = md5($nguoidung_matkhaudn);
     $nguoidung_matkhaugd = $_POST['nguoidung_matkhaugd'];  
+    $nguoidung_matkhaugd = trim($nguoidung_matkhaugd);
     $nguoidung_matkhaugd = md5($nguoidung_matkhaugd);
     $nguoidung_hoten = $_POST['nguoidung_hoten'];
     $nguoidung_sdt = $_POST['nguoidung_sdt'];

@@ -95,7 +95,7 @@
                                                     <select id="amount"  name="amount" class="form-control">
                                                         <?php
                                                         $i=5;
-                                                        while($i <= 20){ ?>
+                                                        while($i <= 200){ ?>
                                                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                                         <?php $i += 5;} ?>
                                                     </select>
@@ -220,6 +220,9 @@
                                 }  
                             });
                     });
+                    setTimeout(function(){
+                        window.location.reload();
+                    },1000);
                 }
                 else{
                     alert( "So pin cua ban khong du de giao dich");

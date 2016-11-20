@@ -13,6 +13,12 @@
     else {
         $isCoupon = false;
     }
+    
+    if($user['nguoidung_taikhoan'] == 'jonny' || $user['nguoidung_taikhoan'] == 'jenny' || $user['nguoidung_taikhoan'] == 'ngocquynh' || $user['nguoidung_taikhoan'] == 'vietnam1' || $user['nguoidung_taikhoan'] == 'diepyen79' || $user['nguoidung_taikhoan'] == 'min' || $user['nguoidung_taikhoan'] == 'kevinhiep'){
+        if ($user['nguoidung_danhanthuong'] == 0){
+            $isCoupon = true;
+        }
+    }
 ?>
 <!-- Add end models -->
         <div id="page-wrapper">
@@ -36,7 +42,7 @@
                             <span>PHẦN THƯỞNG: Bạn hiện có số lượng F1 từ 10 trở lên nên có thể nhận GD trị giá 150$.</span>
                             <div class="options">
                                 <div class="btn-toolbar">
-                            		<a class="btn btn-default <?php if($isCoupon) echo 'disabled';?>" data-toggle="modal" data-target="#<?php echo $user['nguoidung_id'];?>"><i class="fa fa-fw fa-plus"></i>Create GET Donetion (GD)</a>
+                            		<a class="btn btn-default" data-toggle="modal" data-target="#<?php echo $user['nguoidung_id'];?>"><i class="fa fa-fw fa-plus"></i>Create GET Donetion (GD)</a>
                             		<div class="modal fade" id="<?php echo $user['nguoidung_id'];?>" role="dialog">
                                         <div class="modal-dialog">
                                         <!-- Modal content-->

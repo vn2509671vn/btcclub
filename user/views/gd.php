@@ -37,7 +37,9 @@ require("../models/pd-gd.php");
                             <div class="panel-heading">
                                 <div class="options">
                             		<div class="btn-toolbar">
-                            			<a class="btn btn-default <?php if(!$isGD) echo 'disabled';?>" href="creategd.php?id=<?php echo $id;?>"><i class="fa fa-fw fa-plus"></i>Create GET Donation (GD)</a>
+                            		    <?php if($isGD):?>
+                            			<a class="btn btn-default" href="creategd.php?id=<?php echo $id;?>"><i class="fa fa-fw fa-plus"></i>Create GET Donation (GD)</a>
+                            			<?php endif;?>
                             		</div>
                             	</div>
                             </div>

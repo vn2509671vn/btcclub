@@ -18,10 +18,7 @@
         return mysql_query($query);
     }
     function sttaccount($id){
-        $query = "select nguoidung_trangthaihoatdong, nguoidung_id, nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd,nguoidung_hoten, nguoidung_sdt, 
-            nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu,nguoidung_parent_id, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, 
-            nguoidung_dakichpd1, nguoidung_quyen, nguoidung_ngaytao, nguoidung_soluongtaikhoan, nguoidung_capbac,
-            nguoidung_sopin, nguoidung_sopindadung, nguoidung_sotiennhan, nguoidung_sotienhoahong, nguoidung_hethong from nguoidung nd where nd.nguoidung_id=" . $id;
+        $query = "select * from nguoidung nd where nd.nguoidung_id=" . $id;
         return mysql_fetch_array(mysql_query($query));
     }
     function getmk($id){

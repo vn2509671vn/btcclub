@@ -396,11 +396,12 @@
                     /*Add commission for recommender*/
                     $recommenderID = $userPD['nguoidung_gioithieu'];
                     $recommender = getUserByID($recommenderID);
-                    if($recommender['nguoidung_sopindadung'] > 1){
+                    if($recommender['nguoidung_sopindadung'] > 1 && $recommender['nguoidung_trangthaihoatdong'] == 'normal'){
                         $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
                         $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
                         if($updateRecommenderCommission){
-                            addHistoryCommission($recommenderID, $recommenderCommission, 'Hoa hồng trực tiếp');
+                            $descript = 'Hoa hồng trực tiếp - '.$userPD['nguoidung_taikhoan'];
+                            addHistoryCommission($recommenderID, 10, $descript);
                         }
                     }
                     
@@ -409,7 +410,7 @@
                     $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
                     foreach ($arrParent as $parentId) {
                         $root = getUserByID($parentId);
-                        if($root['nguoidung_sopindadung'] <= 1){
+                        if($root['nguoidung_sopindadung'] <= 1 || $root['nguoidung_trangthaihoatdong'] != 'normal'){
                             continue;
                         }
                         $nodeL = getLeftNode($parentId);
@@ -430,11 +431,12 @@
                         $tiencanbang = min($totalL,$totalR);
                         $giatricanbang = $root['nguoidung_giatricanbang'];
                         if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
-                            $hoahong = $root['nguoidung_sotienhoahong'] + ($tiencanbang - $giatricanbang)*$root['nguoidung_phantramhoahong'];
+                            $hoahongduoccong = ($tiencanbang - $giatricanbang)*($root['nguoidung_phantramhoahong']/100);
+                            $hoahong = $root['nguoidung_sotienhoahong'] + $hoahongduoccong;
                             $giatricanbang = $tiencanbang;
                             $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
                             if($updateCommission){
-                                addHistoryCommission($root['nguoidung_id'], $hoahong, 'Hoa hồng nhánh yếu');
+                                addHistoryCommission($root['nguoidung_id'], $hoahongduoccong, 'Hoa hồng nhánh yếu');
                             }
                         }
                     }

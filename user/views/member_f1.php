@@ -69,7 +69,25 @@
                                                     <td><?php echo $listUser['nguoidung_hoten'];?></td>
                                                     <td><?php echo $listUser['nguoidung_mail'];?></td>
                                                     <td><?php echo $listUser['nguoidung_sdt'];?></td>
-                                                    <td><?php echo $listUser['nguoidung_capbac'];?></td>
+                                                    <td><?php 
+                                                        if ($listUser['nguoidung_capbac'] == 'j0'){
+                                                            echo 'b0';
+                                                        }
+                                                        else if($listUser['nguoidung_capbac'] == 'j1'){
+                                                            echo 'b1';
+                                                        }
+                                                        else if($listUser['nguoidung_capbac'] == 'j2'){
+                                                            echo 'b2';
+                                                        }
+                                                        else if($listUser['nguoidung_capbac'] == 'j3'){
+                                                            echo 'b3';
+                                                        }
+                                                        else if($listUser['nguoidung_capbac'] == 'j4'){
+                                                            echo 'b4';
+                                                        }
+                                                        
+                                                        ?>
+                                                    </td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>
                                                     <?php $iSTT++;?>
                                                 </tr>

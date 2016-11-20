@@ -62,7 +62,24 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Cấp bậc:</label>
-                                                    <input name="nguoidung_capbac" class="form-control" id="disabledInput" type="text" value="<?php echo $status['nguoidung_capbac'];  ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
+                                                    <input name="nguoidung_capbac" class="form-control" id="disabledInput" type="text" value="<?php 
+                                                        if ($status['nguoidung_capbac'] == 'j0'){
+                                                            echo 'b0';
+                                                        }
+                                                        else if($status['nguoidung_capbac'] == 'j1'){
+                                                            echo 'b1';
+                                                        }
+                                                        else if($status['nguoidung_capbac'] == 'j2'){
+                                                            echo 'b2';
+                                                        }
+                                                        else if($status['nguoidung_capbac'] == 'j3'){
+                                                            echo 'b3';
+                                                        }
+                                                        else if($status['nguoidung_capbac'] == 'j4'){
+                                                            echo 'b4';
+                                                        }
+                                                        
+                                                        ?>" <?php if($status['nguoidung_quyen'] != 'admin'){ echo 'disabled';} ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Ngày tạo:</label>

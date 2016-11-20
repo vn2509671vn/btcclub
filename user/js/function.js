@@ -4,6 +4,7 @@ function selectorMenu(idMenu){
 
 function timeCountdown(element){
     var endDate = $('#'+element).attr('data-date');
+    endDate = endDate.split("-").join("/");
     var target_date = new Date(endDate).getTime();
     var days, hours, minutes, seconds;
     var szCountTime;

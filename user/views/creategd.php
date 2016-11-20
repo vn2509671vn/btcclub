@@ -65,7 +65,7 @@ require("../models/pd-gd.php");
                                     <label class="control-label col-sm-2">Amount:</label>
                                     <div class="col-sm-10"> 
                                         <select class="form-control" id="amount">
-                                            
+                                            <option>150</option>
                                         </select>
                                     </div>
                                   </div>
@@ -158,6 +158,9 @@ require("../models/pd-gd.php");
                 }
                 else if(data == 2){
                     alert("Mật khẩu giao dịch không chính xác!!!");
+                }
+                else if(data == 3){
+                    alert("Tài khoản của bạn không đủ! Vui lòng kiểm tra lại số tiền có trong tài khoản!!!");
                 }
                 else if(data == 1){
                     window.location.replace("gd.php");

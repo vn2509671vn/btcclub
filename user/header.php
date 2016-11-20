@@ -77,6 +77,10 @@
     $userDetail = userDetail($id);
     $listInbox = getCountInbox($id);
     $numInbox = mysql_num_rows($listInbox);
+    $pdList = dspd($id);
+    $numPd = mysql_num_rows($pdList);
+    $gdList = dsgd($id);
+    $numGd = mysql_num_rows($gdList);
 ?>
 <body>
 
@@ -119,10 +123,10 @@
                         <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Bảng điều khiển</a>
                     </li>
                     <li id="pd">
-                        <a href="pd.php"><i class="fa fa-fw fa-cloud-upload"></i> Quản lý lệnh PD</a>
+                        <a href="pd.php"><i class="fa fa-fw fa-cloud-upload"></i> Quản lý lệnh PD <span class="badge badge-warning"><?php echo $numPd; ?></span></a>
                     </li>
                     <li id="gd">
-                        <a href="gd.php"><i class="fa fa-fw fa-cloud-download"></i> Quản lý lệnh GD</a>
+                        <a href="gd.php"><i class="fa fa-fw fa-cloud-download"></i> Quản lý lệnh GD <span class="badge badge-warning"><?php echo $numGd; ?></span></a>
                     </li>
                     <li id="pin">
                         <a href="transfer_pin.php"><i class="fa fa-fw fa-bolt"></i> Quản lý PIN</a>

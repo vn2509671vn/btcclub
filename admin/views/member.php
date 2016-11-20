@@ -56,6 +56,8 @@
                                                 <th>PHONE</th>
                                                 <th>CẤP BẬT</th>
                                                 <th>PARENTS</th>
+                                                <th>GIỚI THIỆU</th>
+                                                <th>Đã PH</th>
                                                 <th>NHÁNH</th>
                                                 <th>DATE CREATE</th>
                                                 <th>FREEZE</th>
@@ -78,6 +80,8 @@
                                                     <td><?php echo $listUser['nguoidung_sdt'];?></td>
                                                     <td><?php echo $listUser['nguoidung_capbac'];?></td>
                                                     <td><?php echo $listUser['nguoidung_parent_id'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_gioithieu'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_dakichpd1'];?></td>
                                                     <td><?php echo $listUser['nguoidung_loainhanh'];?></td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>
                                                     <input style="display:none" class="form-control" name="id" id="giatri<?php echo $listUser['nguoidung_id'] ?>" type="text" readonly value="<?php echo $listUser['nguoidung_trangthaihoatdong'];?>">

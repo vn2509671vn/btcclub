@@ -49,7 +49,9 @@ require("../models/pd-gd.php");
                             <div class="panel-heading">
                                 <div class="options">
                             		<div class="btn-toolbar">
-                            			<a class="btn btn-default <?php if(!$isPD) echo 'disabled';?>" id="providepd"><i class="fa fa-fw fa-plus"></i>Create PROVIDE Donetion (PD)</a>
+                            		    <?php if($isPD):?>
+                            			<a class="btn btn-default" id="providepd"><i class="fa fa-fw fa-plus"></i>Create PROVIDE Donetion (PD)</a>
+                            			<?php endif;?>
                             		</div>
                             	</div>
                             </div>

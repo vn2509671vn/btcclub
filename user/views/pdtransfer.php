@@ -74,14 +74,14 @@ require("../models/pd-gd.php");
                                                         <td><span class="label text-uppercase <?php echo $listTransfer['transfer_gd_status'];?>"><?php echo $listTransfer['transfer_gd_status'];?></span></td>
                                                         <td <?php if($curDate < $listTransfer['transfer_time_remain']) echo 'class="countdown" id="'.$listTransfer['gd_nguoidung_id'].'"' ;?> data-date='<?php echo $listTransfer['transfer_time_remain'];?>'></td>
                                                         <?php if(strtolower($listTransfer['transfer_pd_status']) == 'waiting'):?>
-                                                            <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#dg<?php echo $listTransfer['gd_nguoidung_id'];?>">Transfered</button></td>
+                                                            <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#dg<?php echo $listTransfer['gd_nguoidung_id'];?>">Transfered</button>&nbsp<a class="btn btn-info btn-sm" href="receivedinfo.php?id=<?php echo $listTransfer['gd_nguoidung_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $pdid;?>">INFO</a></td>
                                                             <div class="modal fade" id="dg<?php echo $listTransfer['gd_nguoidung_id'];?>" role="dialog">
                                                             <div class="modal-dialog">
                                                               <!-- Modal content-->
                                                               <div class="modal-content">
                                                                 <div class="modal-header">
                                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                  <h4 class="modal-title">Vui lòng nhập mã giao dịch.</h4>
+                                                                  <h4 class="modal-title">Vui lòng nhập mã giao dịch Bitcoin (Transaction Hash URL).</h4>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                   <input type="text" class="form-control" id="FF<?php echo $iSTT+$listTransfer['gd_nguoidung_id'];?>"/>
@@ -93,8 +93,9 @@ require("../models/pd-gd.php");
                                                             </div>
                                                             </div>
                                                         <?php elseif($curDate > $listTransfer['transfer_time_remain'] && strtolower($listTransfer['transfer_gd_status']) != 'confirmed'):?>
-                                                            <td><a class="btn btn-sm btn-danger" id="report" onclick="report(<?php echo $listTransfer['transfer_magd_id'];?>)">Report</a></td>
+                                                            <td><a class="btn btn-sm btn-danger" id="report" onclick="report(<?php echo $listTransfer['transfer_magd_id'];?>)">Report</a>&nbsp<a class="btn btn-info btn-sm" href="receivedinfo.php?id=<?php echo $listTransfer['gd_nguoidung_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $pdid;?>">INFO</a></td>
                                                         <?php else:?>
+                                                            <td><a class="btn btn-info btn-sm" href="receivedinfo.php?id=<?php echo $listTransfer['gd_nguoidung_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $pdid;?>">INFO</a></td>
                                                         <?php endif;?>
                                                         <?php $iSTT++;?>
                                                     </tr>
