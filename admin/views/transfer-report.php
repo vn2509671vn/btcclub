@@ -35,8 +35,11 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
+                                                <th>TRANSFER ID</th>
                                                 <th>CREATE DATE</th>
+												<th>USER PD</th>
                                                 <th>PD STATUS</th>
+												<th>USER GD</th>
                                                 <th>GD STATUS</th>
                                                 <th>TRANSFER STATUS</th>
                                                 <th>FINISH DATE</th>
@@ -52,8 +55,11 @@
                                                 <?php while($detailTransfer = mysql_fetch_array($getList)){?>
                                                 <tr>
                                                     <td><?php echo $iSTT;?></td>
+                                                    <td><?php echo $detailTransfer['transfer_id'];?></td>
                                                     <td><?php echo $detailTransfer['transfer_ngaytao'];?></td>
+                                                    <td><?php echo $detailTransfer['PDName'];?></td>
                                                     <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_pd_status'];?>"><?php echo $detailTransfer['transfer_pd_status'];?></span></td>
+                                                    <td><?php echo $detailTransfer['GDName'];?></td>
                                                     <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_gd_status'];?>"><?php echo $detailTransfer['transfer_gd_status'];?></span></td>
                                                     <td><span class="label text-uppercase <?php echo $detailTransfer['transfer_status'];?>"><?php echo $detailTransfer['transfer_status'];?></span></td>
                                                     <td><?php echo $detailTransfer['transfer_time_remain'];?></td>

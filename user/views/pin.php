@@ -179,7 +179,7 @@
             if(parseInt(amount) < parseInt(sopin_chuyen)){
                 $.ajax({
                     url:"../models/transfer_pin.php", 
-                    method:"post",  
+                    method:"post", 
                     data:{
                         action: 'create',
                         idchuyen: '<?php echo $id;?>',
@@ -193,18 +193,6 @@
                     success:function(data)  
                     {
                         if(data == 1){
-                            alert("Giao dich pin thanh cong");
-                            isAutoPD = true;
-                        }
-                        else if(data == 0){
-                            alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
-                        }
-                        else{
-                            alert("Người nhận không tồn tại");
-                        }
-                    }
-                }).done(function(){
-                        if(isAutoPD){
                             $.ajax({
                                 url:"../models/pd_new.php", 
                                 method:"post",  
@@ -218,16 +206,27 @@
                                 {
                                     if(data==1){
                                         alert("Giao dịch thành công! Đã kích hoạt lệnh PD.");
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        alert("Giao dich pin thanh cong");
+                                        window.location.reload();
                                     }
                                 }  
                             });
                         }
-                    });
-                    window.location.reload();
-                }
-                else{
-                    alert( "So pin cua ban khong du de giao dich");
-                }
+                        else if(data == 0){
+                            alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
+                        }
+                        else{
+                            alert("Người nhận không tồn tại");
+                        }
+                    }
+                });
+            }
+            else{
+                alert( "So pin cua ban khong du de giao dich");
+            }
         });
     });
 </script>

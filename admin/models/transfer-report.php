@@ -2,7 +2,12 @@
     require("../../config.php");
     
     function getListTransferWaiting(){
-        $query = "select * from transfer_pd_gd where transfer_status = 'waiting'";
+        $query = "select transfer.*, nguoidungPD.nguoidung_taikhoan as 'PDName', nguoidungGD.nguoidung_taikhoan as 'GDName' from transfer_pd_gd transfer, pd, gd, nguoidung nguoidungPD, nguoidung nguoidungGD 
+        where transfer.transfer_status = 'waiting' 
+        and transfer.transfer_mapd_id = pd.pd_id 
+        and transfer.transfer_magd_id = gd.gd_id 
+        and gd.gd_nguoidung_id = nguoidungGD.nguoidung_id 
+        and pd.pd_nguoidung_id = nguoidungPD.nguoidung_id";
         return mysql_query($query);
     }
     
@@ -17,8 +22,13 @@
         return mysql_query($query);
     }
     
-    function updateGDStatus($gdid, $status){
-        $query = "update gd set gd_status = '$status' where gd_id = $gdid";
+    function updateGDStatus($gdid, $status, $amount){
+		if($amount != 0){
+			$query = "update gd set gd_status = '$status', gd_giatri = $amount where gd_id = $gdid";
+		}
+		else {
+			$query = "update gd set gd_status = '$status' where gd_id = $gdid";
+		}
         return mysql_query($query);
     }
     
@@ -53,7 +63,7 @@
                 $updatePD = updatePDStatus($pdId, 'matched', $Filled);
             }
             
-            $updateGD = updateGDStatus($gdId, 'finished');
+            $updateGD = updateGDStatus($gdId, 'finished', 0);
             $updateTransfer = updateTransferStatus($transferID, 'finished');
             if($updatePD && $updateGD && $updateTransfer){
                 return true;
@@ -68,7 +78,7 @@
             // 1. Cap nhat trang thai gd thanh waiting
             // 2. Cap nhat transfer_status = finished
             // 3. Chuyen trang thai pd thanh finished
-            $updateGD = updateGDStatus($gdId, 'waiting');
+            $updateGD = updateGDStatus($gdId, 'waiting', $amount);
             $updateTransfer = updateTransferStatus($transferID, 'finished');
             $pdInfo = getPDInfo($pdId);
             $Filled = $pdInfo['pd_notfilled'] + $amount;
