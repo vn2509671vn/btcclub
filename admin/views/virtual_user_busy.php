@@ -71,12 +71,15 @@
                                                     <td><span class="label text-uppercase <?php echo $User['transfer_pd_status'];?>"><?php echo $User['transfer_pd_status'];?></span></td>
                                                     <td><span class="label text-uppercase <?php echo $User['transfer_gd_status'];?>"><?php echo $User['transfer_gd_status'];?></span></td>
                                                     <td <?php if($curDate < $User['transfer_time_remain']) echo 'class="countdown" id="'.$User['transfer_id'].'"' ;?> data-date='<?php echo $User['transfer_time_remain'];?>'></td>
-                                                        <?php if(strtolower($User['transfer_gd_status']) == 'waiting' && strtolower($User['transfer_pd_status']) == 'transfered'):?>
-                                                            <td><button type="button" class="btn btn-sm btn-info" onclick="confirm(<?php echo $User['transfer_mapd_id'];?>, <?php echo $User['transfer_id'];?>, <?php echo $User['transfer_magd_id'];?>)">Confirmed</button></td>
-                                                        <?php elseif($curDate > $User['transfer_time_remain'] && strtolower($User['transfer_pd_status']) == 'waiting' && strtolower($User['transfer_gd_status']) != 'report'):?>
-                                                            <td><button type="button" class="btn btn-sm btn-danger" onclick="report(<?php echo $User['transfer_mapd_id'];?>, <?php echo $User['transfer_magd_id'];?>)">Report</button></td>
-                                                        <?php else:?>
-                                                        <?php endif;?>
+                                                        
+                                                    <td>
+														<?php if(strtolower($User['transfer_gd_status']) == 'waiting' && strtolower($User['transfer_pd_status']) == 'transfered'):?>
+														<button type="button" class="btn btn-sm btn-info" onclick="confirm(<?php echo $User['transfer_mapd_id'];?>, <?php echo $User['transfer_id'];?>, <?php echo $User['transfer_magd_id'];?>)">Confirmed</button>&nbsp
+														<?php endif;?>
+														<?php if($curDate > $User['transfer_time_remain'] && strtolower($User['transfer_gd_status']) == 'waiting'):?>
+														<button type="button" class="btn btn-sm btn-danger" onclick="report(<?php echo $User['transfer_mapd_id'];?>, <?php echo $User['transfer_magd_id'];?>)">Report</button>&nbsp
+														<?php endif;?>
+													</td>
                                                     <?php $iSTT++;?>
                                                 </tr>
                                                 <?php }?>

@@ -1,5 +1,26 @@
 <?php 
     require("../../config.php");
+	function send_mail_PD($recipient_email,$subject,$body){
+		$result_mail = false;		
+		ini_set('SMTP','relay-hosting.secureserver.net');// SMTP server
+		ini_set('smtp_port',25);//SMTP server port  
+		$mail = mail($recipient_email,$subject,$body);
+		if($mail){
+			$result_mail = true;
+		}
+		else{
+			$result_mail = false;
+		}
+		return $result_mail;
+	}
+	
+	function totalPDSuccess($userID){
+		$sql = "select * from pd where pd_nguoidung_id = $userID and pd_status = 'finished' and pd_notfilled = 0";
+		$result = mysql_query($sql);
+		$total = mysql_num_rows($result);
+		return $total;
+	}
+	
     function getTotalValue($parentID=null, $gTotal=0){
         // Create the query
         $query = "SELECT * FROM nguoidung WHERE ";
@@ -17,9 +38,11 @@
             {
                 //The current ID;
                 $currentID = $row['nguoidung_id'];
+				// Total PD finished
+				$total = totalPDSuccess($currentID);
                 // Sum all children of the current ID
-                if($row['nguoidung_sopindadung'] >= 1){
-                    $gTotal += 100;
+                if($row['nguoidung_sopindadung'] > 1){
+                    $gTotal += 100*$total;
                 }
                 $gTotal = getTotalValue($currentID, $gTotal);
             }
@@ -53,13 +76,13 @@
     function getLeftNode($parentID){
         $query = "select * from nguoidung where nguoidung_parent_id = $parentID and nguoidung_loainhanh = 'L'";
         $result = mysql_query($query);
-        return mysql_fetch_array($result);
+        return $result;
     }
     
     function getRightNode($parentID){
         $query = "select * from nguoidung where nguoidung_parent_id = $parentID and nguoidung_loainhanh = 'R'";
         $result = mysql_query($query);
-        return mysql_fetch_array($result);
+        return $result;
     }
     
     function kiemtrastatus($nguoidung_id){
@@ -106,7 +129,7 @@
     }
     
     function existPDTransfer($pdid){
-        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_gd_status NOT IN ('confirmed')";
+        $query = "select * from transfer_pd_gd where transfer_mapd_id = $pdid and transfer_status != 'finished'";
         return mysql_query($query);
     }
     
@@ -126,7 +149,7 @@
     }
     
     function existGDTransfer($gdid){
-        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_pd_status NOT IN ('transfered')";
+        $query = "select * from transfer_pd_gd where transfer_magd_id = $gdid and transfer_status != 'finished'";
         return mysql_query($query);
     }
     
@@ -250,6 +273,13 @@
         return mysql_query($query);
     }
     
+    function existPDByUser($userID){
+        $query = "select * from pd where pd_nguoidung_id = $userID and pd_status != 'finish'";
+        $result = mysql_query($query);
+        $numRow = mysql_num_rows($result);
+        return $numRow;
+    }
+    
     /*Group function for GD*/
     function addRWallet($nguoidung_id, $tiennhan){
         $query = "update nguoidung set nguoidung_sotiennhan = $tiennhan where nguoidung_id = $nguoidung_id";
@@ -284,11 +314,15 @@
             $gdid = $_POST['gdid'];
             $magd = $_POST['magd'];
             $time = $_POST['time'];
+			$userGD = getUserByGD($gdid);
             $time = new DateTime($time);
             $datetime = $time->modify('+12 hours');
             $datetime = $datetime->format('Y-m-d H:i:s');
             $transfer = doPDTransfer($pdid, $gdid, $magd, $action, $datetime);
             if($transfer){
+				$subject = "Xác nhận GD | BTCCLUB.INFO";
+				$body = "Người chơi PD đã chuyển bitcoin. Vui lòng đăng nhập vào https://btcclub.info để kiểm tra.";
+				send_mail_PD($userGD['nguoidung_mail'],$subject,$body);
                 echo true;
             }
             else {
@@ -324,9 +358,15 @@
             $existPD = existPD($pdid);
             $existGDTransfer = existGDTransfer($gdid);
             
+			/*Send mail*/
+			$subject = "Giao dịch hoàn tất | BTCCLUB.INFO";
+			$body = "Giao dịch của bạn đã hoàn thành. Vui lòng đăng nhập vào https://btcclub.info để kiểm tra.";
+			send_mail_PD($userPD['nguoidung_mail'],$subject,$body);
+				
             /*Execute for GD to PD*/
             if(mysql_num_rows($existGDTransfer) == 0){
-                if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1 && $gdDetail['gd_mathuong'] != 1){
+                $existPDCreated = existPDByUser($userGD['nguoidung_id']);
+                if($userGD['nguoidung_sopin'] > 0 && $userGD['nguoidung_hethong'] != 1 && $gdDetail['gd_mathuong'] != 1 && $existPDCreated == 0){
                     $mapd = 'PD'.$userGD['nguoidung_id'].date("YmdHs");
                     $pin = $userGD['nguoidung_sopin'] - 1;
                     $pinused = $userGD['nguoidung_sopindadung'] + 1;
@@ -392,7 +432,7 @@
             
             /*Add Commission*/
             if($pdFinish){
-                if($userPD['nguoidung_sopindadung'] == 1){
+                //if($userPD['nguoidung_sopindadung'] == 1){
                     /*Add commission for recommender*/
                     $recommenderID = $userPD['nguoidung_gioithieu'];
                     $recommender = getUserByID($recommenderID);
@@ -400,7 +440,7 @@
                         $recommenderCommission = $recommender['nguoidung_sotienhoahong'] + 10;
                         $updateRecommenderCommission = updateRecommanderCommisson($recommenderID, $recommenderCommission);
                         if($updateRecommenderCommission){
-                            $descript = 'Hoa hồng trực tiếp - '.$userPD['nguoidung_taikhoan'];
+							$descript = 'Hoa hồng trực tiếp - '.$userPD['nguoidung_taikhoan'];
                             addHistoryCommission($recommenderID, 10, $descript);
                         }
                     }
@@ -410,37 +450,54 @@
                     $arrParent = getParent($userPD['nguoidung_id'], $arrParent);
                     foreach ($arrParent as $parentId) {
                         $root = getUserByID($parentId);
-                        if($root['nguoidung_sopindadung'] <= 1 || $root['nguoidung_trangthaihoatdong'] != 'normal'){
-                            continue;
-                        }
-                        $nodeL = getLeftNode($parentId);
-                        $nodeR = getRightNode($parentId);
+                        $sqlNodeL = getLeftNode($parentId);
+                        $sqlNodeR = getRightNode($parentId);
                         $totalL = 0;
                         $totalR = 0;
                         $tiencanbang = 0;
-                        $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
-                        $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
-                        if($nodeL['nguoidung_sopindadung'] >= 1){
-                            $totalL += 100;
+                        if(mysql_num_rows($sqlNodeL) > 0){
+                            $nodeL = mysql_fetch_array($sqlNodeL);
+                            $totalL = getTotalValue($nodeL['nguoidung_id'], $totalL);
+                            if($nodeL['nguoidung_sopindadung'] > 1){
+                                $totalL += 100*totalPDSuccess($nodeL['nguoidung_id']);
+                            }
+                        }
+                        else {
+                            $totalL = 0;
                         }
                         
-                        if($nodeR['nguoidung_sopindadung'] >= 1){
-                            $totalR += 100;
+                        if(mysql_num_rows($sqlNodeR) > 0){
+                            $nodeR = mysql_fetch_array($sqlNodeR);
+                            $totalR = getTotalValue($nodeR['nguoidung_id'], $totalR);
+                            if($nodeR['nguoidung_sopindadung'] > 1){
+                                $totalR += 100*totalPDSuccess($nodeR['nguoidung_id']);
+                            }
                         }
+                        else {
+                            $totalR = 0;
+                        }
+                        
                         
                         $tiencanbang = min($totalL,$totalR);
                         $giatricanbang = $root['nguoidung_giatricanbang'];
                         if($tiencanbang != 0 && $tiencanbang > $giatricanbang){
-                            $hoahongduoccong = ($tiencanbang - $giatricanbang)*($root['nguoidung_phantramhoahong']/100);
+							$hoahongduoccong = ($tiencanbang - $giatricanbang)*($root['nguoidung_phantramhoahong']/100);
                             $hoahong = $root['nguoidung_sotienhoahong'] + $hoahongduoccong;
                             $giatricanbang = $tiencanbang;
-                            $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
+                            if($root['nguoidung_sopindadung'] <= 1 || $root['nguoidung_trangthaihoatdong'] != 'normal'){
+                                $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $root['nguoidung_sotienhoahong']);
+                                continue;
+                            }
+                            else {
+                                $updateCommission = updateCommisson($root['nguoidung_id'], $giatricanbang, $hoahong);
+                            }
+                            
                             if($updateCommission){
                                 addHistoryCommission($root['nguoidung_id'], $hoahongduoccong, 'Hoa hồng nhánh yếu');
                             }
                         }
                     }
-                }
+                //}
             }
             
             if($transferFinish && $transfer){

@@ -124,33 +124,38 @@ require("../models/pd-gd.php");
 </html>
 <script type="text/javascript">
     function transfer(element, gdid, time){
-        var magd = $('#'+element).val();
-        var time = time;
-        $.ajax({
-                url:"../models/pd-gd.php", 
-                method:"post",  
-                data:{
-                    action: 'transfered',
-                    pdid: '<?php echo $pdid;?>',
-                    gdid: gdid,
-                    magd: magd,
-                    time: time
-                },  
-                dataType:"text",  
-                success:function(data)  
-                {  
-                    if(data){
-                        window.location.reload();
-                    }
-                    else {
-                        alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
-                    }
-                }  
-            });
+        var r = confirm("Vui lòng nhấn OK để xác nhận!");
+        if (r == true) {
+            var magd = $('#'+element).val();
+            var time = time;
+            $.ajax({
+                    url:"../models/pd-gd.php", 
+                    method:"post",  
+                    data:{
+                        action: 'transfered',
+                        pdid: '<?php echo $pdid;?>',
+                        gdid: gdid,
+                        magd: magd,
+                        time: time
+                    },  
+                    dataType:"text",  
+                    success:function(data)  
+                    {  
+                        if(data){
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
+                        }
+                    }  
+                });   
+        }
     }
     
     function report(gdid){
-        $.ajax({
+        var r = confirm("Vui lòng nhấn OK để xác nhận!");
+        if (r == true) {
+            $.ajax({
                 url:"../models/pd-gd.php", 
                 method:"post",  
                 data:{
@@ -169,7 +174,9 @@ require("../models/pd-gd.php");
                     }
                 }  
             });
+        }
     }
+    
     selectorMenu("pd");
     $(document).ready(function() {
         $('.countdown').each(function(){

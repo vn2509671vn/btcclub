@@ -170,62 +170,65 @@
     
     $(document).ready(function() {
         $('#chuyenpin').click(function(){
-            var amount = $('#amount').val();
-            var gioithieu = $('#nguoidung_parent_id').val();
-            var noidung = $('#pin_user_description').val();
-            var mk = $('#nguoidung_matkhaugd').val();
-            var sopin_chuyen = '<?php echo $status["nguoidung_sopin"]; ?>';
-            var isAutoPD = false;
-            if(parseInt(amount) < parseInt(sopin_chuyen)){
-                $.ajax({
-                    url:"../models/transfer_pin.php", 
-                    method:"post", 
-                    data:{
-                        action: 'create',
-                        idchuyen: '<?php echo $id;?>',
-                        gioithieu: gioithieu,
-                        amount: amount,
-                        sopinchuyen: '<?php echo $status["nguoidung_sopin"]; ?>',
-                        mk: mk,
-                        noidung: noidung
-                    },
-                    dataType:"text",  
-                    success:function(data)  
-                    {
-                        if(data == 1){
-                            $.ajax({
-                                url:"../models/pd_new.php", 
-                                method:"post",  
-                                data:{
-                                    action: 'create',
-                                    gioithieu: gioithieu,
-                                    mapd: 'PD<?php echo $status['nguoidung_parent_id'].date("YmdHs");?>'
-                                },  
-                                dataType:"text",  
-                                success:function(data)  
-                                {
-                                    if(data==1){
-                                        alert("Giao dịch thành công! Đã kích hoạt lệnh PD.");
-                                        window.location.reload();
-                                    }
-                                    else {
-                                        alert("Giao dich pin thanh cong");
-                                        window.location.reload();
-                                    }
-                                }  
-                            });
+            var r = confirm("Vui lòng nhấn OK để xác nhận!");
+            if (r == true) {
+                var amount = $('#amount').val();
+                var gioithieu = $('#nguoidung_parent_id').val();
+                var noidung = $('#pin_user_description').val();
+                var mk = $('#nguoidung_matkhaugd').val();
+                var sopin_chuyen = '<?php echo $status["nguoidung_sopin"]; ?>';
+                var isAutoPD = false;
+                if(parseInt(amount) < parseInt(sopin_chuyen)){
+                    $.ajax({
+                        url:"../models/transfer_pin.php", 
+                        method:"post", 
+                        data:{
+                            action: 'create',
+                            idchuyen: '<?php echo $id;?>',
+                            gioithieu: gioithieu,
+                            amount: amount,
+                            sopinchuyen: '<?php echo $status["nguoidung_sopin"]; ?>',
+                            mk: mk,
+                            noidung: noidung
+                        },
+                        dataType:"text",  
+                        success:function(data)  
+                        {
+                            if(data == 1){
+                                $.ajax({
+                                    url:"../models/pd_new.php", 
+                                    method:"post",  
+                                    data:{
+                                        action: 'create',
+                                        gioithieu: gioithieu,
+                                        mapd: 'PD<?php echo $status['nguoidung_parent_id'].date("YmdHs");?>'
+                                    },  
+                                    dataType:"text",  
+                                    success:function(data)  
+                                    {
+                                        if(data==1){
+                                            alert("Giao dịch thành công! Đã kích hoạt lệnh PD.");
+                                            window.location.reload();
+                                        }
+                                        else {
+                                            alert("Giao dich pin thanh cong");
+                                            window.location.reload();
+                                        }
+                                    }  
+                                });
+                            }
+                            else if(data == 0){
+                                alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
+                            }
+                            else{
+                                alert("Người nhận không tồn tại");
+                            }
                         }
-                        else if(data == 0){
-                            alert("Chứng thực giao dịch mật khẩu giao dịch thất bại. ");
-                        }
-                        else{
-                            alert("Người nhận không tồn tại");
-                        }
-                    }
-                });
-            }
-            else{
-                alert( "So pin cua ban khong du de giao dich");
+                    });
+                }
+                else{
+                    alert( "So pin cua ban khong du de giao dich");
+                }
             }
         });
     });

@@ -76,13 +76,15 @@ require("../models/pd-gd.php");
                                                         <td><span class="label text-uppercase <?php echo $listTransfer['transfer_pd_status'];?>"><?php echo $listTransfer['transfer_pd_status'];?></span></td>
                                                         <td><span class="label text-uppercase <?php echo $listTransfer['transfer_gd_status'];?>"><?php echo $listTransfer['transfer_gd_status'];?></span></td>
                                                         <td <?php if($curDate < $listTransfer['transfer_time_remain']) echo 'class="countdown" id="'.$listTransfer['pd_nguoidung_id'].'"' ;?> data-date='<?php echo $listTransfer['transfer_time_remain'];?>'></td>
-                                                        <?php if(strtolower($listTransfer['transfer_gd_status']) == 'waiting' && strtolower($listTransfer['transfer_pd_status']) == 'transfered'):?>
-                                                            <td><button type="button" class="btn btn-sm btn-info" onclick="confirm(<?php echo $listTransfer['transfer_mapd_id'];?>, <?php echo $listTransfer['transfer_id'];?>)">Confirmed</button>&nbsp<a class="btn btn-sm btn-info" href="sentinfo.php?id=<?php echo $listTransfer['transfer_mapd_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $gdid;?>">INFO</a></td>
-                                                        <?php elseif($curDate > $listTransfer['transfer_time_remain'] && strtolower($listTransfer['transfer_pd_status']) == 'waiting' && strtolower($User['transfer_gd_status']) != 'report'):?>
-                                                            <td><button type="button" class="btn btn-sm btn-danger" onclick="report(<?php echo $listTransfer['transfer_mapd_id'];?>)">Report</button>&nbsp<a class="btn btn-sm btn-info" href="sentinfo.php?id=<?php echo $listTransfer['transfer_mapd_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $gdid;?>">INFO</a></td>
-                                                        <?php else:?>
-                                                            <td><a class="btn btn-sm btn-info" href="sentinfo.php?id=<?php echo $listTransfer['transfer_mapd_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $gdid;?>">INFO</a></td>
-                                                        <?php endif;?>
+                                                        <td>
+															<?php if(strtolower($listTransfer['transfer_gd_status']) == 'waiting' && strtolower($listTransfer['transfer_pd_status']) == 'transfered'):?>
+															<button type="button" class="btn btn-sm btn-info" onclick="confirmGD(<?php echo $listTransfer['transfer_mapd_id'];?>, <?php echo $listTransfer['transfer_id'];?>)">Confirmed</button>&nbsp
+															<?php endif;?>
+															<?php if($curDate > $listTransfer['transfer_time_remain'] && strtolower($listTransfer['transfer_gd_status']) == 'waiting'):?>
+															<button type="button" class="btn btn-sm btn-danger" onclick="reportGD(<?php echo $listTransfer['transfer_mapd_id'];?>)">Report</button>&nbsp
+															<?php endif;?>
+															<a class="btn btn-sm btn-info" href="sentinfo.php?id=<?php echo $listTransfer['transfer_mapd_id'];?>&amount=<?php echo number_format($listTransfer['transfer_giatri']);?>&transferid=<?php echo $gdid;?>">INFO</a>
+														</td>
                                                         <?php $iSTT++;?>
                                                     </tr>
                                                     <?php endwhile;?>
@@ -109,8 +111,10 @@ require("../models/pd-gd.php");
 
 </html>
 <script type="text/javascript">
-    function confirm(pdid, transferid){
-        $.ajax({
+    function confirmGD(pdid, transferid){
+        var r = confirm("Vui lòng nhấn OK để xác nhận!");
+        if (r == true) {
+            $.ajax({
                 url:"../models/pd-gd.php", 
                 method:"post",  
                 data:{
@@ -130,10 +134,13 @@ require("../models/pd-gd.php");
                     }
                 }  
             });
+        }
     }
     
-    function report(pdid){
-        $.ajax({
+    function reportGD(pdid){
+        var r = confirm("Vui lòng nhấn OK để xác nhận!");
+        if (r == true) {
+            $.ajax({
                 url:"../models/pd-gd.php", 
                 method:"post",  
                 data:{
@@ -152,6 +159,7 @@ require("../models/pd-gd.php");
                     }
                 }  
             });
+        }
     }
     
     selectorMenu("gd");

@@ -57,6 +57,8 @@
                                                 <th>CẤP BẬT</th>
                                                 <th>PARENTS</th>
                                                 <th>GIỚI THIỆU</th>
+                                                <th>Pin</th>
+                                                <th>C-Wallet</th>
                                                 <th>Đã PH</th>
                                                 <th>NHÁNH</th>
                                                 <th>DATE CREATE</th>
@@ -81,6 +83,8 @@
                                                     <td><?php echo $listUser['nguoidung_capbac'];?></td>
                                                     <td><?php echo $listUser['nguoidung_parent_id'];?></td>
                                                     <td><?php echo $listUser['nguoidung_gioithieu'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_sopin'];?></td>
+                                                    <td><?php echo $listUser['nguoidung_sotienhoahong'];?></td>
                                                     <td><?php echo $listUser['nguoidung_dakichpd1'];?></td>
                                                     <td><?php echo $listUser['nguoidung_loainhanh'];?></td>
                                                     <td><?php echo $listUser['nguoidung_ngaytao'];?></td>

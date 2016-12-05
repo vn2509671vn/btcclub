@@ -6,7 +6,7 @@
     }
     
     function danhsachpd(){
-        $query = "select pd.*, nguoidung.* from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and nguoidung.nguoidung_trangthaihoatdong = 'normal' and pd.pd_notfilled != 0 and pd.pd_status = 'waiting'ORDER BY pd.pd_ngaytao ASC";
+        $query = "select pd.*, nguoidung.* from pd, nguoidung where pd.pd_nguoidung_id = nguoidung.nguoidung_id and nguoidung.nguoidung_trangthaihoatdong = 'normal' and pd.pd_notfilled != 0 and pd.pd_status != 'finished' ORDER BY pd.pd_ngaytao ASC";
         return mysql_query($query);
     }
     

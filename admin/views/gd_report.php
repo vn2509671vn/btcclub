@@ -6,9 +6,9 @@
     require("../models/member_f1.php");
     $array_id = mysql_fetch_array(getid($user_check));
     $id = $array_id[0];
-    $user = get_gd_report();
+    $pd_report = get_gd_report();
     $rowUser = 1;
-    if(!$user || mysql_num_rows($user) == 0){
+    if(!$pd_report || mysql_num_rows($pd_report) == 0){
         $rowUser = 0;
     }
 ?>
@@ -67,7 +67,7 @@
                                                     <tr><td colspan="8" class="text-center">No item</td></tr>
                                             <?php }else{?>
                                                 <?php $iSTT = 1;?>
-                                                <?php while($listUser = mysql_fetch_array($user)){?>
+                                                <?php while($listUser = mysql_fetch_array($pd_report)){?>
                                                 <tr>
                                                     <td><?php echo $iSTT;?></td>
                                                     <td><?php echo $listUser['nguoidung_taikhoan'];?></td>

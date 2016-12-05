@@ -9,6 +9,10 @@
         $query = "update nguoidung set nguoidung_sopin = $sopin, nguoidung_sotienhoahong = $sotienhoahong, nguoidung_sotiennhan = $sotiennhan where nguoidung_id=$id";
         return mysql_query($query);
     }
+    function updateGioiThieu($id, $sopin, $sotienhoahong, $sotiennhan){
+        $query = "update nguoidung set nguoidung_sopin = $sopin, nguoidung_sotienhoahong = $sotienhoahong, nguoidung_sotiennhan = $sotiennhan where nguoidung_id=$id";
+        return mysql_query($query);
+    }
     function sttaccount($id){
         $query = "select nguoidung_trangthaihoatdong, nguoidung_id, nguoidung_taikhoan, nguoidung_matkhaudn, nguoidung_matkhaugd,nguoidung_hoten, nguoidung_sdt, 
             nguoidung_mail, nguoidung_diachi, nguoidung_btclink, nguoidung_gioithieu,nguoidung_parent_id, nguoidung_trangthaikichhoat, nguoidung_hankichpd1, 
@@ -39,15 +43,16 @@
         $lstgioithieu = sttaccount($gioithieu);
         $sotienhoahong_gt = $lstgioithieu['nguoidung_sotienhoahong'];
         $sotienhoahong_gt = $sotienhoahong_gt / 2;
-        $sotiennhan_gt = $lstgioithieu['nguoidung_sotiennhan'];
-        $sotiennhan_gt =$sotiennhan_gt / 2 ;
+        // $sotiennhan_gt = $lstgioithieu['nguoidung_sotiennhan'];
+        // $sotiennhan_gt =$sotiennhan_gt / 2 ;
         $sopin = $lstuser['nguoidung_sopin'];
         $sopin_gt_tru = $lstgioithieu['nguoidung_sopin'] / 2 ;
         if($status == 'freeze'){    
             $isUpdatefreeze = updateFreeze($id,$status);
             $isUpdatefreeze_gt = updateFreeze_gt($gioithieu, $sopin, $sotienhoahong_gt, $sotiennhan_gt);
+            // $isUpdatefreeze_gt = updateFreeze_gt($gioithieu, $sopin, $sotienhoahong_gt, $sotiennhan_gt);
             $isLichSuTru = taolichsupin($id, 'PIN PHẠT', 0 - $sopin , 'Clock Account' , 'Clock Account' );
-            $isLichSuTru_gt = taolichsupin($gioithieu, 'PIN PHẠT', 0 - $sopin_gt_tru, 'Phạt do tài khoản ' . '[' . $lstuser['nguoidung_taikhoan'] . ']', '' );
+            // $isLichSuTru_gt = taolichsupin($gioithieu, 'PIN PHẠT', 0 - $sopin_gt_tru, 'Phạt do tài khoản ' . '[' . $lstuser['nguoidung_taikhoan'] . ']', '' );
             if($isUpdatefreeze && $isUpdatefreeze_gt){
                 echo 1;
             }
@@ -78,7 +83,7 @@
             $isUpdateclock = updateFreeze($id,$status);
             $isUpdatefreeze_gt = updateFreeze_gt($gioithieu, $sopin, $sotienhoahong_gt, $sotiennhan_gt);
             $isLichSuTru = taolichsupin($id, 'PIN PHẠT', 0 - $sopin , 'Clock Account' , 'Clock Account' );
-            $isLichSuTru_gt = taolichsupin($gioithieu, 'PIN PHẠT', 0 - $sopin_gt_tru, 'Phạt do tài khoản ' . '[' . $lstuser['nguoidung_taikhoan'] . ']', '' );
+            // $isLichSuTru_gt = taolichsupin($gioithieu, 'PIN PHẠT', 0 - $sopin_gt_tru, 'Phạt do tài khoản ' . '[' . $lstuser['nguoidung_taikhoan'] . ']', '' );
             if($isUpdateclock && $isUpdatefreeze_gt){
                 echo 1;
             }

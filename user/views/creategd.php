@@ -131,41 +131,45 @@ require("../models/pd-gd.php");
     });
     
     $('#submit').click(function(){
-        var type = $('input[type=radio]:checked').val();
-        var amount = $('#amount').val();
-        var pass = $('#pwd').val();
-        var userid = '<?php echo $id;?>';
-        var tongtiennhan = '<?php echo $user['nguoidung_sotiennhan'];?>';
-        var tonghoahong = '<?php echo $user['nguoidung_sotienhoahong'];?>';
-        $.ajax({
-            url:"../models/gd.php",  
-            method:"post",  
-            data:{
-                action: 'create',
-                type: type,
-                amount: amount,
-                pass: pass,
-                userid: userid,
-                magd: 'GD<?php echo $user['nguoidung_id'].date("YmdHs");?>',
-                tongtiennhan: tongtiennhan,
-                tonghoahong: tonghoahong
-            },  
-            dataType:"text",  
-            success:function(data)
-            {
-                if(data == 0){
-                    alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
+        var r = confirm("Vui lòng nhấn OK để xác nhận!");
+        if (r == true) {
+            var type = $('input[type=radio]:checked').val();
+            var amount = $('#amount').val();
+            var pass = $('#pwd').val();
+            var userid = '<?php echo $id;?>';
+            var tongtiennhan = '<?php echo $user['nguoidung_sotiennhan'];?>';
+            var tonghoahong = '<?php echo $user['nguoidung_sotienhoahong'];?>';
+            var magd = type + '<?php echo $user['nguoidung_id'].date("YmdHs");?>';
+            $.ajax({
+                url:"../models/gd.php",  
+                method:"post",  
+                data:{
+                    action: 'create',
+                    type: type,
+                    amount: amount,
+                    pass: pass,
+                    userid: userid,
+                    magd: magd,
+                    tongtiennhan: tongtiennhan,
+                    tonghoahong: tonghoahong
+                },  
+                dataType:"text",  
+                success:function(data)
+                {
+                    if(data == 0){
+                        alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
+                    }
+                    else if(data == 2){
+                        alert("Mật khẩu giao dịch không chính xác!!!");
+                    }
+                    else if(data == 3){
+                        alert("Tài khoản của bạn không đủ! Vui lòng kiểm tra lại số tiền có trong tài khoản!!!");
+                    }
+                    else if(data == 1){
+                        window.location.replace("gd.php");
+                    }
                 }
-                else if(data == 2){
-                    alert("Mật khẩu giao dịch không chính xác!!!");
-                }
-                else if(data == 3){
-                    alert("Tài khoản của bạn không đủ! Vui lòng kiểm tra lại số tiền có trong tài khoản!!!");
-                }
-                else if(data == 1){
-                    window.location.replace("gd.php");
-                }
-            }
-        })
+            })
+        }
     });
 </script>

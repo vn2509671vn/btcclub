@@ -123,38 +123,42 @@ require("../models/pd-gd.php");
     selectorMenu("pd");
     $(document).ready(function() {
         $('#providepd').click(function(){
-            var sopin = <?php echo $user['nguoidung_sopin']; ?>;
-            var sopindadung = <?php echo $user['nguoidung_sopindadung']; ?>;
-            var status = '<?php echo $user['nguoidung_trangthaikichhoat'];?>';
-            if(status == "new"){
-                status = "old";
+            var r = confirm("Vui lòng nhấn OK để xác nhận!");
+            if (r == true) {
+                var sopin = <?php echo $user['nguoidung_sopin']; ?>;
+                var sopindadung = <?php echo $user['nguoidung_sopindadung']; ?>;
+                var status = '<?php echo $user['nguoidung_trangthaikichhoat'];?>';
+                if(status == "new"){
+                    status = "old";
+                }
+                sopin -= 1;
+                sopindadung += 1;
+                
+                $.ajax({
+                    url:"../models/pd.php", 
+                    method:"post",  
+                    data:{
+                        action: 'create',
+                        id: '<?php echo $id;?>',
+                        sopin: sopin,
+                        status: status,
+                        sopindadung: sopindadung,
+                        mapd: 'PD<?php echo $user['nguoidung_id'].date("YmdHs");?>'
+                    },  
+                    dataType:"text",  
+                    success:function(data)  
+                    {  
+                        if(data){
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
+                        }
+                    }  
+                  });
             }
-            sopin -= 1;
-            sopindadung += 1;
-            
-            $.ajax({
-                url:"../models/pd.php", 
-                method:"post",  
-                data:{
-                    action: 'create',
-                    id: '<?php echo $id;?>',
-                    sopin: sopin,
-                    status: status,
-                    sopindadung: sopindadung,
-                    mapd: 'PD<?php echo $user['nguoidung_id'].date("YmdHs");?>'
-                },  
-                dataType:"text",  
-                success:function(data)  
-                {  
-                    if(data){
-                        window.location.reload();
-                    }
-                    else {
-                        alert("Có lỗi phát sinh!!! Vui lòng liên hệ admin");
-                    }
-                }  
-              });
         });
+        
         $('#table-pd').DataTable({
             "searching": true,
             "info": true,

@@ -29,11 +29,22 @@
         return mysql_query($query);
     }
     
+    function existPDForTransferPin($userID){
+        $query = "select * from pd where pd_nguoidung_id = $userID and pd_status = 'waiting'";
+        $result = mysql_query($query);
+        $numRow = mysql_num_rows($result);
+        return $numRow;
+    }
+    
     if(isset($_POST['action'])){
         $userName = $_POST['gioithieu'];
         $mapd = $_POST['mapd'];
         $lstthongtin = mysql_fetch_array(thongtin($userName));
         $userID = $lstthongtin['nguoidung_id'];
+        $pdNumber = existPDForTransferPin($userID);
+        if($pdNumber == 1){
+            return;
+        }
         $sopin = $lstthongtin['nguoidung_sopin'];
         $sopin -= 1; 
         $sopindadung = $lstthongtin['nguoidung_sopindadung'];

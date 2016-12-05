@@ -43,10 +43,21 @@
         return mysql_query($query);
     }
     
+    function existGD($userID){
+        $query = "select * from gd where gd_nguoidung_id = $userID and gd_status = 'waiting'";
+        $result = mysql_query($query);
+        $numRow = mysql_num_rows($result);
+        return $numRow;
+    }
+    
     if(isset($_POST['action'])){
         $action = $_POST['action'];
         if($action == 'create'){
             $id = $_POST['userid'];
+            $gdNumber = existGD($id);
+            if($gdNumber == 1){
+                return;
+            }
             $matkhau2 = mysql_real_escape_string($_POST['pass']);
             $amount = $_POST['amount'];
             $type = $_POST['type'];
@@ -125,20 +136,21 @@
         }
         else if($action == 'cwallet'){
             $userID = $_POST['userID'];
+            $userDeital = kiemtramk2($userID);
             $listF1 = getListF1($userID);
             $countF1 = mysql_num_rows($listF1);
             $output = "";
             $maxAmount = 0;
-            if($countF1 >= 30){
+            if($userDeital['nguoidung_capbac'] == 'j4'){
                 $maxAmount = 350;
             }
-            else if($countF1 >= 20){
+            else if($userDeital['nguoidung_capbac'] == 'j3'){
                 $maxAmount = 200;
             }
-            else if($countF1 >= 10){
+            else if($userDeital['nguoidung_capbac'] == 'j2'){
                 $maxAmount = 100;
             }
-            else if ($countF1 >= 5){
+            else if ($userDeital['nguoidung_capbac'] == 'j1'){
                 $maxAmount = 50;
             }
             for($i = 50; $i <= $maxAmount; $i+=50 ){

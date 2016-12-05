@@ -26,8 +26,19 @@
         return mysql_query($query);
     }
     
+    function existPDForCreate($userID){
+        $query = "select * from pd where pd_nguoidung_id = $userID and pd_status = 'waiting'";
+        $result = mysql_query($query);
+        $numRow = mysql_num_rows($result);
+        return $numRow;
+    }
+    
     if(isset($_POST['action'])){
         $id = $_POST['id'];
+        $pdNumber = existPDForCreate($id);
+        if($pdNumber == 1){
+            return;
+        }
         $sopin = $_POST['sopin'];
         $sopindadung = $_POST['sopindadung'];
         $mapd = $_POST['mapd'];

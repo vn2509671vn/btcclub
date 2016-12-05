@@ -28,6 +28,9 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
+                        <h2><marquee bgcolor="#f65314">THÔNG BÁO: Trong vòng 48h những tài khoản nào không đủ tiêu chuẩn để kích pin thì ban quản trị sẽ xóa tài khoản ra khỏi BTCLLUB để tránh những mã ảo.
+                        PHẦN THƯỞNG: Hãy đạt 10F1 để nhận ngay mã thưởng GD giá trị 150$ nhé! Chúc các anh em gạt hái được nhiều thành công cùng BTCLUB.</marquee> </h2>
+                        
                         <h1 class="page-header orange-color">
                             Bảng Điều Khiển
                         </h1>
@@ -148,6 +151,40 @@
                                 
                                 <!-- End Content of post -->
                             </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">📣CHƯƠNG TRÌNH KÍCH CẦU📣</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne"  class="panel-collapse collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    Xin thông báo đến các ace của BTCCLUB.<br/>
+                                    Để khích lệ tinh thần  làm việc của các ace ở các thị trường ban quản trị có ra chương trình 10F1 sẻ được nhận 1GH ( Từ ngày 14/11/2016 cho đến 14/12/2016) sẻ kết thúc chương trình<br/>
+                                    Đặt biệt ko hạng chế phần thưởng cho các thành viên.ace tranh thủ kiếm nhiều Gh về cho mình.<br/>
+                                    Chúc các ace thành công cùng BTCCLUB<br/>
+                                    Trân trọng
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">📣 📣THÔNG BÁO📣📣</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    Xin Thông báo đến các ace trong BTCCLUB<br/>
+                                    Từ ngày 14/11/2016 BTCCLUB chính thức xã pin và hệ thống tự động kích pin cho những tài khoản nào đã được lên cây và đủ tiêu chuẩn quy định trong BTCCLUB<br/>.
+                                    📌Lưu ý trong 48h những id nào ko đủ tiêu chuẩn để kích pin thì ban quản trị sẻ xoá id đó ra khỏi BTCCLUB để tránh những mã ảo.<br/>
+                                    👉🏿👉🏿Các ace upline kiểm tra hệ thống mình để ko có sai sót và tạo điều kiện cho ban điều hành của BTCCLUB làm việc có hiệu quả tốt nhất.<br/>
+                                    Xin chân thành cám ơn các ace đã tin tưởng vào BTCCLUB cùng đồng hành với Chúng tôi.<br/>
+                                    Chúc các ace gạt hái nhiều thành công cùng với BTCCLUB<br/>
+                                    🎀🎀 TRÂN TRỌNG 🎀🎀<br/>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
